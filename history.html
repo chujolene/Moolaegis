@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>歷史紀錄</title>
+  <link rel="stylesheet" href="CSS02/history1020.css">
+</head>
+<body>
+  <header class="navbar">
+    <nav class="nav-links">
+      <a href="home.html">首頁</a>
+      <a href="state.html">預測財報</a>
+      <!-- <a href="settings.html">設定</a> -->
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <h1 class="page-title">歷史紀錄</h1>
+
+    <section class="table-section">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>上傳時間</th>
+            <th>檔案名稱</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 動態資料由 history.js 插入 -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <chat-icon></chat-icon>
+
+  <script type="module" src="./src/components/chat-icon/chat-icon.js"></script>
+  <script type="module" src="./history.js"></script>
+</body>
+</html>

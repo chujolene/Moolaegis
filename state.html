@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>預測財報系統</title>
+
+  <!-- 圖表套件（沿用原本 Chart.js） -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="state.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+
+</head>
+<body>
+  <header class="header">
+    <div class="header-right">
+      <div class="nav-links">
+        <a class="nav-link" href="Home.html">Home</a>
+        <a class="nav-link" href="history.html">History</a>
+        <!-- <a class="nav-link" href="settings.html">設定</a> -->
+      </div>
+    </div>
+  </header>
+  <div class = "front">
+    <h1>預測財報系統</h1>
+    <div class="muted">依序輸入「報表期間與期初/期末」資料 → 即時檢視圖表與財務分析，並可匯出為 PDF 檔案。</div>
+  </div>
+    
+<div class="container">
+  <!-- ① 報表期間 -->
+  <h2>① 報表期間</h2>
+  <div class="card">
+    <div class="row-2col">
+      <div>
+        <label>開始日 *</label>
+        <input type="date" id="period_start" />
+      </div>
+      <div>
+        <label>結束日 *</label>
+        <input type="date" id="period_end" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ② 資產（Assets） -->
+  <h2>
+    ② 資產 (Assets)
+    <button class="mini-btn" type="button" onclick="openModal('assetModal')">＋新增資產科目</button>
+  </h2>
+  <div class="card">
+    <table class="ie-table">
+      <thead>
+        <tr>
+          <th class="left">科目</th>
+          <th>期初</th>
+          <th>期末</th>
+          <th class="act"></th>
+        </tr>
+      </thead>
+      <tbody id="assets_body">
+        <tr>
+          <td class="left">現金及約當現金</td>
+          <td><input type="number" id="cash_begin" value="0" step="1000"></td>
+          <td><input type="number" id="cash_end" value="0" step="1000"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left">應收帳款</td>
+          <td><input type="number" id="ar_begin" value="0" step="1000"></td>
+          <td><input type="number" id="ar_end" value="0" step="1000"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left">存貨</td>
+          <td><input type="number" id="inventory_begin" value="0" step="1000"></td>
+          <td><input type="number" id="inventory_end" value="0" step="1000"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left">不動產、廠房及設備（PPE）</td>
+          <td><input type="number" id="ppe_begin" value="0" step="1000"></td>
+          <td><input type="number" id="ppe_end" value="0" step="1000"></td>
+          <td></td>
+        </tr>
+        <!-- 透過 Modal 新增的資產列 -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ③ 負債（Liabilities） -->
+  <h2>
+    ③ 負債 (Liabilities)
+    <button class="mini-btn" type="button" onclick="openModal('liabModal')">＋新增負債科目</button>
+  </h2>
+  <div class="card">
+    <table class="ie-table">
+      <thead>
+        <tr>
+          <th class="left">科目</th>
+          <th>期初</th>
+          <th>期末</th>
+          <th class="act"></th>
+        </tr>
+      </thead>
+      <tbody id="liabs_body">
+        <tr>
+          <td class="left">應付帳款</td>
+          <td><input type="number" id="ap_begin" value="0" step="1000"></td>
+          <td><input type="number" id="ap_end" value="0" step="1000"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left">借款（含長短期）</td>
+          <td><input type="number" id="debt_begin" value="0" step="1000"></td>
+          <td><input type="number" id="debt_end" value="0" step="1000"></td>
+          <td></td>
+        </tr>
+        <!-- 透過 Modal 新增的負債列 -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ④ 權益（Equity） -->
+  <h2>
+    ④ 權益 (Equity)
+    <button class="mini-btn" type="button" onclick="openModal('equityModal')">＋新增權益科目</button>
+  </h2>
+  <div class="card">
+    <table class="ie-table">
+      <thead>
+        <tr>
+          <th class="left">科目</th>
+          <th>期初</th>
+          <th>期末</th>
+          <th class="act"></th>
+        </tr>
+      </thead>
+      <tbody id="equity_body">
+        <tr>
+          <td class="left">股本</td>
+          <td><input type="number" id="capital_begin" value="0" step="1000"></td>
+          <td><input type="number" id="capital_end" value="0" step="1000"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left">期初保留盈餘（RE）</td>
+          <td><input type="number" id="re_begin" value="0" step="1000"></td>
+          <td></td>
+          <td class="act"></td>
+        </tr>
+
+        <!-- 透過 Modal 新增的權益列 -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ⑤ 期間損益科目 -->
+  <h2>
+    ⑤ 期間損益科目 (Income & Expenses)
+    <button class="mini-btn" type="button" onclick="openModal('plModal')">＋新增損益科目</button>
+  </h2>
+  <div class="card">
+    <table class="ie-table onecol">
+      <thead>
+        <tr>
+          <th class="left">科目</th>
+          <th>本期金額</th>
+          <th class="act"></th>
+        </tr>
+      </thead>
+      <tbody id="pl_body">
+        <tr>
+          <td class="left">營業收入</td>
+          <td><input type="number" id="revenue" value="0" step="1000"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left">營業成本</td>
+          <td><input type="number" id="cogs" value="0" step="1000"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left">營業費用</td>
+          <td><input type="number" id="op_expense" value="0" step="1000"></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="left">所得稅費用</td>
+          <td><input type="number" id="tax_expense" value="0" step="1000"></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 隱藏欄位：自訂科目合計 -->
+  <input type="hidden" id="other_assets" value="0" />
+  <input type="hidden" id="other_liabs"  value="0" />
+  <input type="hidden" id="other_equity" value="0" />
+
+  <!-- ⑥ 預測參數 -->
+  <h2>⑥ 預測參數</h2>
+  <div class="card">
+    <div class="grid4">
+      <div>
+        <label>預測年數（僅 3 或 5）</label>
+        <select id="fc_years" onchange="renderGrowthInputs()">
+          <option value="3" selected>3 年</option>
+          <option value="5">5 年</option>
+        </select>
+      </div>
+      <div>
+        <label>成長率模式</label>
+        <select id="growth_mode" onchange="renderGrowthInputs()">
+          <option value="fixed" selected>固定年成長率</option>
+          <option value="custom">自訂每年</option>
+        </select>
+      </div>
+      <div id="growth_inputs"><!-- 動態產生 --></div>
+      <div>
+        <label>有效稅率（%）</label>
+        <input type="number" id="ass_tax_rate" value="20" step="0.1">
+      </div>
+      <div>
+        <label>折舊率（Dep / 期初PPE, %）</label>
+        <input type="number" id="ass_dep_rate" value="10" step="0.1">
+      </div>
+      <div>
+        <label>資本支出 / 營收（%）</label>
+        <input type="number" id="ass_capex_rate" value="5" step="0.1">
+      </div>
+      <div>
+        <label>應收帳款 / 營收（%）</label>
+        <input type="number" id="ass_ar_pct" value="15" step="0.1">
+      </div>
+      <div>
+        <label>存貨 / 營業成本（%）</label>
+        <input type="number" id="ass_inv_pct" value="10" step="0.1">
+      </div>
+      <div>
+        <label>應付帳款 / 營業成本（%）</label>
+        <input type="number" id="ass_ap_pct" value="8" step="0.1">
+      </div>
+    </div>
+    <div style="margin-top:12px">
+      <button class="btn" onclick="generateForecast()">生成預測財報</button>
+      <button class="btn ghost" onclick="exportForecastPDF()">匯出預測（PDF）</button>
+    </div>
+  </div>
+
+  <!-- ⑦ 預測結果 -->
+  <h2>⑦ 預測結果</h2>
+
+  <!-- 數字格式設定 -->
+  <div class="card" id="number_format_settings" style="margin-bottom:15px;">
+    <h3>數字格式設定</h3>
+    <div class="row-2col">
+      <label>
+        小數位數
+        <select id="decimal_places">
+          <option value="0">0 位</option>
+          <option value="1">1 位</option>
+          <option value="2">2 位</option>
+          <option value="3" selected>3 位</option>
+        </select>
+      </label>
+
+      <label>
+        進位方式
+        <select id="round_mode">
+          <option value="round" selected>四捨五入</option>
+          <option value="ceil">無條件進位</option>
+          <option value="floor">無條件捨去</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div id="results"></div>
+</div>
+
+<!-- 四個 Modal（內容維持中文） -->
+<div id="assetModal" class="modal" data-section="assets">
+  <div class="modal-card">
+    <div class="modal-title">新增 Asset 科目</div>
+    <label class="ck"><input type="checkbox" value="無形資產"> 無形資產 <span class="exists-hint" hidden>（已存在）</span></label>
+    <label class="ck"><input type="checkbox" value="投資性不動產"> 投資性不動產 <span class="exists-hint" hidden>（已存在）</span></label>
+    <label class="ck"><input type="checkbox" value="其他流動資產"> 其他流動資產 <span class="exists-hint" hidden>（已存在）</span></label>
+    <div class="modal-actions">
+      <button class="btn" onclick="confirmAddFromModal('assets')">確認新增</button>
+      <button class="btn ghost" onclick="closeModal('assetModal')">取消</button>
+    </div>
+    <button class="modal-x" onclick="closeModal('assetModal')">×</button>
+  </div>
+</div>
+
+<div id="liabModal" class="modal" data-section="liabs">
+  <div class="modal-card">
+    <div class="modal-title">新增 Liability 科目</div>
+    <label class="ck"><input type="checkbox" value="應付票據"> 應付票據 <span class="exists-hint" hidden>（已存在）</span></label>
+    <label class="ck"><input type="checkbox" value="應付公司債"> 應付公司債 <span class="exists-hint" hidden>（已存在）</span></label>
+    <label class="ck"><input type="checkbox" value="其他流動負債"> 其他流動負債 <span class="exists-hint" hidden>（已存在）</span></label>
+    <div class="modal-actions">
+      <button class="btn" onclick="confirmAddFromModal('liabs')">確認新增</button>
+      <button class="btn ghost" onclick="closeModal('liabModal')">取消</button>
+    </div>
+    <button class="modal-x" onclick="closeModal('liabModal')">×</button>
+  </div>
+</div>
+
+<div id="equityModal" class="modal" data-section="equity">
+  <div class="modal-card">
+    <div class="modal-title">新增 Equity 科目</div>
+    <label class="ck"><input type="checkbox" value="資本公積"> 資本公積 <span class="exists-hint" hidden>（已存在）</span></label>
+    <label class="ck"><input type="checkbox" value="庫藏股（負數）"> 庫藏股（負數） <span class="exists-hint" hidden>（已存在）</span></label>
+    <label class="ck"><input type="checkbox" value="其他綜合損益累計"> 其他綜合損益累計 <span class="exists-hint" hidden>（已存在）</span></label>
+    <div class="modal-actions">
+      <button class="btn" onclick="confirmAddFromModal('equity')">確認新增</button>
+      <button class="btn ghost" onclick="closeModal('equityModal')">取消</button>
+    </div>
+    <button class="modal-x" onclick="closeModal('equityModal')">×</button>
+  </div>
+</div>
+
+<div id="plModal" class="modal" data-section="pl">
+  <div class="modal-card">
+    <div class="modal-title">新增 Expense 科目</div>
+    <label class="ck"><input type="checkbox" value="折舊費用"> 折舊費用（由折舊率自動計算） <span class="exists-hint" hidden>（已存在）</span></label>
+    <label class="ck"><input type="checkbox" value="利息費用"> 利息費用 <span class="exists-hint" hidden>（已存在）</span></label>
+    <label class="ck"><input type="checkbox" value="其他收益/費損"> 其他收益/費損 <span class="exists-hint" hidden>（已存在）</span></label>
+    <div class="modal-actions">
+      <button class="btn" onclick="confirmAddFromModal('pl')">確認新增</button>
+      <button class="btn ghost" onclick="closeModal('plModal')">取消</button>
+    </div>
+    <button class="modal-x" onclick="closeModal('plModal')">×</button>
+  </div>
+</div>
+<chat-icon></chat-icon>
+
+<script type="module" src="1020.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<script type="module" src="src/components/chat-icon/chat-icon.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+{
+  "page": {
+    "title": "Moolaegis",
+    "loginTitle": "Login • Moolaegis",
+    "registerTitle": "Sign Up • Moolaegis",
+    "forgetTitle": "Reset Password • Moolaegis",
+    "homeTitle": "Home • Moolaegis",
+    "chatTitle": "Chat • Moolaegis"
+  },
+   "nav": {
+    "home": "Home",
+    "analysis": "Sensitivity Analysis",
+    "history": "History",
+    "settings": "Settings"
+  },
+  "ui": { 
+    "back": "Back",
+    "close": "Close"
+  },
+  "home": {
+    "welcome": "Welcome to",
+    "signup": "Sign Up",
+    "login": "Login",
+    "welcomeBackPrefix": "Welcome back, ",
+    "settings": "Settings",
+    "logout": "Logout",
+
+     "fs": {
+      "title": "Financial Statements",
+      "desc": "Simply input key indicators to quickly generate financial forecast reports.",
+      "cta": "Start Generating"
+    },
+    "sa": {
+      "title": "Sensitivity Analysis",
+      "desc": "Slide different key drivers from –50% to +50% and see real-time impacts on each line item.",
+      "cta": "Start Analysis"
+    },
+    "hr": {
+      "title": "Historical Reports",
+      "desc": "Retrieve and conduct a thorough review of all your previously generated financial statements.",
+      "cta": "View History"
+    }
+  },
+  "form": { 
+    "email": "Email",
+    "username": "Username", 
+    "password": "Password",
+    "newPassword": "New Password",
+    "fillAllFields": "Fill all fields",
+    "fillAllFieldsOrMin": "Fill all fields and use a password \u2265 {n} chars",
+    "invalidEmail": "Invalid email address",
+    "passwordMin": "Password must be at least {n} characters."
+  },
+  "auth": {
+    "login": "Login",
+    "forgot": "Forgot password?",
+    "signup": "Sign Up",
+    "noAccount": "No account?",
+    "haveAccount": "I have an account!",
+    "reset": "Reset",
+    "resetTitle": "Reset password",
+    "loginSuccess": "Login successful",
+    "loginFailed": "Login failed",
+    "incorrectPassword": "Incorrect password",
+    "userNotFound": "User not found",
+    "registerSuccess": "Registration successful",
+    "registerFailed": "Registration failed.",
+    "emailTaken": "Email is already in use",
+    "usernameTaken": "Username is already in use"
+  },
+  "modal": {
+    "title": "Notice",
+    "ok": "OK",
+    "defaultMsg": "Please review your input.",
+    "successTitle": "Success",
+    "errorTitle": "Error",
+    "warningTitle": "Warning"
+  },
+  "net": {
+    "cannotConnect": "Cannot connect to server",
+    "serverErrorTryAgain": "Server error. Please try again."
+  },
+  "chat": {
+    "title": "Chat with Moolaegis",
+    "placeholder": "Ask me anything…",
+    "send": "Send"
+  },
+  "ocr": {
+    "confirmTitle": "Confirm Your Upload",
+    "previewAlt": "Preview",
+    "confirm": "Confirm Upload",
+    "resultTitle": "OCR Result (Editable):",
+    "resultAria": "OCR result editable text",
+    "useThis": "Use This"
+  }
+}

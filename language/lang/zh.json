@@ -1,0 +1,97 @@
+{
+   "page": {
+    "title": "Moolaegis",
+    "loginTitle": "登入 • Moolaegis",
+    "registerTitle": "註冊 • Moolaegis",
+    "forgetTitle": "重設密碼 • Moolaegis",
+    "homeTitle": "首頁 • Moolaegis",
+     "chatTitle": "生成報表 • Moolaegis"
+  },
+   "nav": {
+    "home": "首頁",
+    "analysis": "敏感度分析",
+    "history": "歷史報表",
+    "settings": "設定"
+  },
+  "ui": { 
+    "back": "返回",
+    "close": "關閉"
+  },
+  "home": {
+    "welcome": "歡迎來到",
+    "signup": "註冊",
+    "login": "登入",
+    "welcomeBackPrefix": "歡迎回來，",
+    "settings": "設定",
+    "logout": "登出",
+
+    "fs": {
+      "title": "財務報表",
+      "desc": "只需輸入關鍵指標，快速生成財務預測報表。",
+      "cta": "生成報表"
+    },
+    "sa": {
+      "title": "敏感度分析",
+      "desc": "動態調整假設參數，立即比較各科目對不同情境的敏感度與變動幅度。",
+      "cta": "立即分析"
+    },
+    "hr": {
+      "title": "歷史報表",
+      "desc": "瀏覽、搜尋與管理過往產出的所有財務報表。",
+      "cta": "檢視歷史報表"
+    }
+  },
+
+  "form": { 
+    "email": "電子郵件",
+    "username": "使用者名稱", 
+    "password": "密碼",
+    "newPassword": "新密碼",
+    "fillAllFields": "請填寫所有欄位",
+    "fillAllFieldsOrMin": "請填寫所有欄位，且密碼長度需 \u2265 {n} 字元",
+    "invalidEmail": "電子郵件格式不正確",
+    "passwordMin": "密碼長度至少 {n} 個字元"
+  },
+  "auth": {
+    "login": "登入",
+    "forgot": "忘記密碼？",
+    "signup": "註冊",
+    "noAccount": "沒有帳號？",
+    "haveAccount": "我有帳號！",
+    "reset": "重設",
+    "resetTitle": "重設密碼",
+    "loginSuccess": "登入成功",
+    "loginFailed": "登入失敗",
+    "incorrectPassword": "密碼錯誤",
+    "userNotFound": "找不到使用者",
+    "registerSuccess": "註冊成功",
+    "registerFailed": "註冊失敗",
+    "emailTaken": "此電子郵件已被使用",
+    "usernameTaken": "此使用者名稱已被使用"
+  },
+  "modal": {
+    "title": "提醒",
+    "ok": "確定",
+    "defaultMsg": "請檢查您的輸入。",
+    "successTitle": "成功",
+    "errorTitle": "錯誤",
+    "warningTitle": "提醒"
+  },
+  "net": {
+    "cannotConnect": "無法連接伺服器",
+    "serverErrorTryAgain": "伺服器錯誤，請稍後再試。"
+  },
+  "chat": {
+    "title": "Moolaegis 智能顧問",
+    "placeholder": "在此輸入訊息……",
+    "send": "送出"
+  },
+  "ocr": {
+    "confirmTitle": "發票掃描與辨識",
+    "previewAlt": "預覽",
+    "confirm": "確認上傳",
+    "resultTitle": "掃描結果（可編輯）：",
+    "resultAria": "可編輯的 OCR 結果文字",
+    "useThis": "使用此內容"
+  }
+}

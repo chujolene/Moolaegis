@@ -1,0 +1,149 @@
+/* ====== 全域設定 ====== */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Inter", "Noto Sans TC", sans-serif;
+  color: #111418;
+  background-image: url('img1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ====== 導覽列 ====== */
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 14px 48px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #111418;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+/* ====== 主內容區 ====== */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  padding-top: 20px;
+  width: 100%;
+  max-width: 1100px;     
+  margin: 0 auto;         
+}
+
+.page-title {
+  font-size: 34px;
+  font-weight: 800;
+  margin-bottom: 28px;
+  margin-left: 5px; 
+}
+
+/* ====== 表格區塊 ====== */
+.table-section {
+  width: 100%;
+  max-width: 1100px;
+  background: #ffffff;
+  border: 1px solid #dbe0e6;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.history-table th,
+.history-table td {
+  padding: 18px 24px;
+  font-size: 15px;
+  border-bottom: 1px solid #e6e9ef;
+}
+
+.history-table th {
+  background-color: #fafbfc;
+  font-weight: 600;
+  color: #111418;
+}
+
+.history-table td {
+  color: #60758a;
+}
+
+.history-table tr:last-child td {
+  border-bottom: none;
+}
+
+.history-table tr:hover {
+  background-color: #f9fbfd;
+}
+
+/* ====== 操作按鈕樣式 ====== */
+.action-btn {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* ====== Open PDF 按鈕 ====== */
+.action-open {
+  background-color: #97A5C0;  /* 藍色主題 */
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+.action-open:hover {
+  background-color: #1d4ed8;
+  box-shadow: 0 3px 6px rgba(37, 99, 235, 0.25);
+  transform: translateY(-1px);
+}
+
+/* ====== Delete 按鈕 ====== */
+.action-delete {
+  background-color: #E4B69E;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+  margin-left: 8px;
+}
+
+.action-delete:hover {
+  background-color: #dc2626;
+  box-shadow: 0 3px 6px rgba(239, 68, 68, 0.25);
+  transform: translateY(-1px);
+}
+
+/* ====== 按鈕在表格中的排列 ====== */
+.history-table td button {
+  margin-right: 4px;
+}
+

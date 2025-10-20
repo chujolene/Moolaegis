@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title data-i18n="page.homeTitle">Home — Moolaegis</title>
+  <link rel="icon" href="data:;base64,=">
+
+  <!-- 字體 -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="CSS02/Home.css"/>
+</head>
+
+<body>
+  
+  <main class="wrapper">
+    
+    <!-- 動態歡迎文字：前半用 i18n，名稱由 JS 填入 -->
+    <!-- 替換你目前的 h1 區塊 -->
+    <div class="welcome-bar">
+      <h1 class="welcome-title">
+        <span data-i18n="home.welcomeBackPrefix">Welcome back, </span>
+        <span id="welcomeUsername"></span>
+      </h1>
+    </div>
+
+    <!-- 三張功能卡片外框 -->
+    <section class="features features--lang-anchor">
+      <!-- ✅ 語言下拉：掛在「外框」上，貼右上方 -->
+      
+
+      <!-- 卡片 1：Financial Statements -->
+      <article class="feature-card">
+        <div class="card-content">
+          <div class="card-text">
+            <h3 class="card-title" data-i18n="home.fs.title">Financial Statements</h3>
+            <p class="card-description" data-i18n="home.fs.desc">
+              Simply input key indicators to quickly generate financial forecast reports.
+            </p>
+            <button class="btn btn-primary" onclick="location.href='state.html'" data-i18n="home.fs.cta">
+              Start Generating
+            </button>
+          </div>
+          <div class="card-image">
+            <div class="img-box">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBofq-vfCf6sROVhTJY-4551OYJlPVRiqVjn0-DshZQZJ3hWvcLk8OZn6XYvRKFDY-zd0OLlPSGWBZY69g_aSylG9hVUuaipMnp542AOtmgsTKrVr8YIcCGNOp8cjfj0LhOfwxTVYTLNoUqmYNzdrtKRfM8jg2mwyzA8hv9WXkH0-FYXijNhjokHxtweWSNexlKFAj3SyFMhFikfiSgCujQpi6ub5jIByASIEorjSLm-XbVpJHIuo3xQF-GnQ1PnLkS2ErlwJnPs30" alt="chart"/>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 卡片 2：Sensitivity Analysis 
+      <article class="feature-card">
+        <div class="card-content">
+          <div class="card-text">
+            <h3 class="card-title" data-i18n="home.sa.title">Sensitivity Analysis</h3>
+            <p class="card-description" data-i18n="home.sa.desc">
+              Slide different key drivers from –50% to +50% and see real-time impacts on each line item.
+            </p>
+            <button class="btn btn-primary" onclick="location.href='analysis.html'" data-i18n="home.sa.cta">
+              Start Analysis
+            </button>
+          </div>
+          <div class="card-image">
+            <div class="img-box">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwgwf3V5OI4c9nEp4YR2cjmAyFCp1wlKxkPk-Qscs7wePUVbd9Ir4y83WJk_EkbJVQsdTIWAUUKKEqV3lPTZEkmEP3DXO7ohtjv_CSgEoHbheoATWM_yf9UgyrmRSchMDDVXfhN8aDriUO5zIX2_bSjSnifPnZNJ6p1LN71kbuvz1-ZUenKZZ6t4B917esOdT4wsjG8AU-j9-4lwWNlrRkcXuLxELp1Xpc6PeOjVQE7938hNeGx4DsclO8sx4MIDSxGA3QecDyb88" alt="chart"/>
+            </div>
+          </div>
+        </div>
+      </article> 
+      -->
+      
+
+      <!-- 卡片 3：Historical Reports -->
+      <article class="feature-card">
+        <div class="card-content">
+          <div class="card-text">
+            <h3 class="card-title" data-i18n="home.hr.title">Historical Reports</h3>
+            <p class="card-description" data-i18n="home.hr.desc">
+              Retrieve and conduct a thorough review of all your previously generated financial statements.
+            </p>
+            <button class="btn btn-primary" onclick="location.href='history.html'" data-i18n="home.hr.cta">
+              View History
+            </button>
+          </div>
+          <div class="card-image">
+            <div class="img-box">
+              <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNl7eaQ9446xvAGO5GjoTuJ8UJ6JH7iO6ptM0Dc9HQgfhlhjR5KBKOcgV4WF0vJP_Ve3o8qUH3bYog7kryDHXnpbWVxT8HirmgRitmpspqbIDDH4yuChkzLl_qB9L44It9jPXugQgmhQ7sa4QzO1uO7tvh56-YlHGCRa8RDpI_lGrzP80_-k4wDgwfdf88gC7TzsHJiB84J6jq6ykcpfjP6QlPdZpZzmkSFNs0Yj3MckyUHu18pwknGVHg-5StI3WaFPpBuU71JdM" alt="chart"/>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Footer Controls -->
+    <div class="footer-controls">
+      <button class="btn btn-settings" onclick="location.href='feedback.html'">Feedback</button>
+      <button class="btn btn-logout" id="logoutBtn" data-i18n="home.logout">Logout</button>
+    </div>
+    <chat-icon></chat-icon>
+  </main>
+
+  <!-- JS（如你把 Home.js 搬到 JS01/，請改 src="JS01/Home.js?v=..."） -->
+  <script type="module" src="Home.js?v=20250731"></script>
+  <script src="logout.js?v=20250731"></script>
+
+  <!-- i18n 腳本：若本頁在子資料夾，改成 ../language/... 或在 head 設定 window.LANG_BASE='../language' -->
+  <script defer src="./language/js/include-header.js?v=20250731"></script>
+  <script defer src="./language/js/i18n.js?v=20250731"></script>
+  <script type="module" src="src/components/chat-icon/chat-icon.js"></script>
+</body>
+</html>

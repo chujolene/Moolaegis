@@ -1,0 +1,66 @@
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+  font-family: "Noto Sans", Times, serif;
+}
+
+body {
+  background:
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url('img.png') no-repeat center/cover;
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh;
+}
+
+.wrapper {
+  width: 480px;
+  background: rgba(255,255,255,0.85);
+  border-radius: 12px;
+  padding: 35px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  text-align: center;
+
+}
+
+.wrapper h1 {
+  font-size: 28px;
+  color: #9a9590;
+}
+
+.brand {
+    font-size: 40px;
+    color: #443c3c;  /* 品牌色 */
+}
+
+.btn-group {
+  display: flex; justify-content: center; gap: 20px; margin-top: 30px;
+}
+
+.btn {
+  flex: 1; max-width: 180px;
+  padding: 12px 0;
+  font-size: 16px; font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+
+/* Sign Up：主色填滿 */
+.btn.signup {
+  background-color: #9a9590;
+  color: #fff; border: none;
+}
+.btn.signup:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Login：白底描邊 */
+.btn.login {
+  background: #fff;
+  color: #9a9590;
+  border: 2px solid #9a9590;
+}
+.btn.login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}

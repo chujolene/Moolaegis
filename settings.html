@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+    />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="CSS02/se02.css">
+    <title>Settings</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <link rel="stylesheet" href="./language/css/i18n.css" />
+</head>
+  <body>    
+    <div class="layout-wrapper">
+      <header class="header">
+        <div class="header-right">
+          <div class="nav-links">
+            <a class="nav-link" href="Home.html">首頁</a>
+            <a class="nav-link" href="state.html">預測財報</a>
+            <a class="nav-link" href="history.html">歷史紀錄</a>
+          </div>
+        </div>
+      </header>
+
+      <div class="wrapper">
+        <form action="" method="post" id="loginForm" novalidate>
+          <h1>設定</h1>
+
+          <div class="input-box">
+            <input type="text" name="username" placeholder="Username">
+            <i class="bx bx-user"></i>
+          </div>
+
+          <div class="input-box">
+            <input type="password" name="password" placeholder="Password">
+            <i class="bx bx-lock"></i>
+          </div>
+        </form>
+
+        <div class="button-section">
+          <div class="button-container">
+          <button class="cancel-button">
+            <span class="button-text" href="Home.html">刪除</span>
+          </button>
+          <button class="save-button">
+            <span class="button-text">儲存改變</span>
+          </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <script defer src="./language/js/include-header.js"></script>
+  <script defer src="./language/js/i18n.js"></script>
+</body>
+</html>
+

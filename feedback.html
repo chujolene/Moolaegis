@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用者意見回饋</title>
+  <link rel="stylesheet" href="CSS02/feed1020.css">
+</head>
+
+<!-- ✅ Navbar 在 body 外層（不被主要內容限制） -->
+<header>
+  <nav class="navbar">
+    <div class="nav-right">
+      <a href="home.html">首頁</a>
+      <a href="state.html">預測財報</a>
+      <a href="history.html">歷史紀錄</a>
+    </div>
+  </nav>
+</header>
+
+<body>
+  <main>
+    <h1>使用者意見回饋</h1>
+
+    <section class="feedback-form">
+      <label for="comment">您的意見 *</label>
+      <textarea id="comment" placeholder="請輸入您的回饋..." required></textarea>
+      <div class="form-actions">
+        <button id="submitBtn">送出意見</button>
+      </div>
+    </section>
+
+    <section class="feedback-list">
+      <h3>我的回饋紀錄</h3>
+      <div id="feedbackContainer" class="no-feedback">目前尚無回饋</div>
+    </section>
+  </main>
+
+  
+  <chat-icon></chat-icon>
+
+  <script type="module" src="./src/components/chat-icon/chat-icon.js"></script>
+  <script type="module" src="feedback.js"></script>
+</body>
+</html>

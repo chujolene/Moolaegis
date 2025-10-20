@@ -1,0 +1,20 @@
+<!-- language/partials/language.html -->
+<nav class="i18n-header">
+  <label for="langSwitcher" class="i18n-header__label">
+    <span class="i18n-header__icon" aria-hidden="true">🌎</span>
+  </label>
+  <select id="langSwitcher" class="i18n-header__select" aria-label="Language">
+    <option value="zh">繁體中文</option>
+    <option value="en">English</option>
+  </select>
+</nav>
+
+<style>
+  /* 參考父容器（.wrapper）定位：放在上緣外側、靠右，不覆蓋內容 */
+  
+  
+  .i18n-header__select:focus,
+  .i18n-header__select:focus-visible { outline: none; box-shadow: none; }
+  .i18n-header__select::-moz-focus-inner { border: 0; }
+  .i18n-header__select:-moz-focusring    { outline: none; }
+</style>

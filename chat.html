@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 頁籤標題：可被 i18n.js 更新 -->
+  <title data-i18n="page.chatTitle">Chat • Moolaegis</title>
+
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link
+    rel="stylesheet"
+    as="style"
+    onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&family=Inter:wght@400;500;700;900&family=Noto+Sans:wght@400;500;700;900"
+  />
+  <link rel="stylesheet" href="CSS02/chat.css" />
+
+  <!-- 語言下拉（你採「作法A」時可不引入此檔；若保留也不影響） -->
+  <link rel="stylesheet" href="./language/css/i18n.css" />
+
+  <!-- OCR / Chat 腳本（保持原路徑與載入順序） -->
+  <script type="module" src="chat-ocr.js" defer></script>
+</head>
+<body>
+  <!-- 語言下拉（由 partial 注入） -->
+  
+
+  <div class="layout-wrapper">
+    <!-- 站內導覽 -->
+    <!-- <header class="header">
+      <div class="header-right">
+        <nav class="nav-links">
+          <a class="nav-link" href="Home.html"       data-i18n="nav.home">Home</a>
+          <a class="nav-link" href="analysis.html"   data-i18n="nav.analysis">Sensitivity Analysis</a>
+          <a class="nav-link" href="history.html"    data-i18n="nav.history">History</a>
+          <a class="nav-link" href="settings.html"   data-i18n="nav.settings">Settings</a>
+          
+        </nav>
+      </div>
+    </header> -->
+
+    <main class="main-content">
+      <div class="content-container">
+        <!-- <div class="page-title-section">
+          <p class="page-title" data-i18n="chat.title">Chat with Moolaegis</p>
+        </div> -->
+
+        <!-- 中央白色卡片：訊息顯示區 -->
+        <section class="chat-box" aria-label="Chat box">
+          <!-- 訊息列表（JS append） -->
+          <div id="messages"></div>
+
+          <!-- 卡片底部輸入列 -->
+          <div class="chat-bar">
+            <input
+              class="chat-input"
+              id="chatInput"
+              type="text"
+              placeholder="Ask me anything…"
+              data-i18n-placeholder="chat.placeholder"
+              aria-label="Message"
+              data-i18n-aria-label="chat.placeholder"
+            />
+
+            <!-- 上傳收據（顯示 + 按鈕） -->
+            <label for="receipt-upload" class="upload-btn" title="Upload">
+              +
+            </label>
+            <input
+              type="file"
+              id="receipt-upload"
+              accept="image/png, image/jpeg"
+              style="display:none;"
+            />
+
+            <button class="send-btn" id="sendBtn" type="button" data-i18n="chat.send">
+              Send
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- OCR Modal -->
+  <div id="ocr-modal" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="ocr-modal-title">
+    <div class="modal-box">
+      <h3 id="ocr-modal-title" class="modal-title" data-i18n="ocr.confirmTitle">Confirm Your Upload</h3>
+
+      <!-- 預覽圖 -->
+      <div id="preview-block">
+        <img
+          id="ocr-image-preview"
+          class="preview-img"
+          src=""
+          alt="Preview"
+          data-i18n-alt="ocr.previewAlt"
+        />
+      </div>
+
+      <!-- Step1：只有按鈕與分隔線 -->
+      <div id="step1-actions">
+        <div class="btn-row">
+          <button id="confirm-upload-btn" class="btn btn-primary" type="button" data-i18n="ocr.confirm">
+            Confirm Upload
+          </button>
+          <button id="close-modal-btn-top" class="btn btn-close" type="button" data-i18n="ui.close">
+            Close
+          </button>
+        </div>
+        <hr id="step1-divider" class="divider" />
+      </div>
+
+      <!-- Step2：OCR 結果 -->
+      <div id="ocr-result-section" class="result-section hidden">
+        <h4 class="result-title" data-i18n="ocr.resultTitle">OCR Result (Editable):</h4>
+        <textarea
+          id="ocr-result-text"
+          class="result-text"
+          aria-label="OCR result editable text"
+          data-i18n-aria-label="ocr.resultAria"
+        ></textarea>
+
+        <div class="btn-row">
+          <button id="use-ocr-btn" class="btn btn-secondary" type="button" data-i18n="ocr.useThis">
+            Use This
+          </button>
+          <button id="close-modal-btn-bottom" class="btn btn-close" type="button" data-i18n="ui.close">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 主邏輯 -->
+  <script type="module" src="chat.js"></script>
+
+  <!-- i18n（保持相對路徑） -->
+  <script defer src="./language/js/include-header.js"></script>
+  <script defer src="./language/js/i18n.js"></script>
+</body>
+</html>

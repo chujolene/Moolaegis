@@ -159,6 +159,7 @@
     "paramARpct": "應收帳款 / 營收（%）",
     "paramInvPct": "存貨 / 營業成本（%）",
     "paramAPpct": "應付帳款 / 營業成本（%）",
+     "paramInterestRate": "借款利率（%）",
 
     "asset": {
       "cash": "現金及約當現金",

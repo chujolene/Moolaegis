@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>預測財報系統</title>
+  <title data-i18n="state.pageTitle">預測財報系統</title>
 
   <!-- 圖表套件（沿用原本 Chart.js） -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -24,62 +24,70 @@
     </div>
   </header>
   <div class = "front">
-    <h1>預測財報系統</h1>
-    <div class="muted">依序輸入「報表期間與期初/期末」資料 → 即時檢視圖表與財務分析，並可匯出為 PDF 檔案。</div>
+    <h1 data-i18n="state.title">預測財報系統</h1>
+    <div class="muted" data-i18n="state.subtitle">
+      依序輸入「報表期間與期初/期末」資料 → 即時檢視圖表與財務分析，並可匯出為 PDF 檔案。
+    </div>
   </div>
     
 <div class="container">
   <!-- ① 報表期間 -->
-  <h2>① 報表期間</h2>
-  <div class="card">
-    <div class="row-2col">
-      <div>
-        <label>開始日 *</label>
-        <input type="date" id="period_start" />
-      </div>
-      <div>
-        <label>結束日 *</label>
-        <input type="date" id="period_end" />
+  <h2 data-i18n="state.section1">① 報表期間</h2>
+    <div class="card">
+      <div class="row-2col">
+        <div>
+          <label data-i18n="state.startDate">開始日 *</label>
+          <input type="date" id="period_start" />
+        </div>
+        <div>
+          <label data-i18n="state.endDate">結束日 *</label>
+          <input type="date" id="period_end" />
+        </div>
       </div>
     </div>
-  </div>
+
 
   <!-- ② 資產（Assets） -->
   <h2>
-    ② 資產 (Assets)
-    <button class="mini-btn" type="button" onclick="openModal('assetModal')">＋新增資產科目</button>
+    <span data-i18n="state.section2">② 資產 (Assets)</span>
+    <button class="mini-btn" type="button"
+            data-i18n="state.addAsset"
+            onclick="openModal('assetModal')">
+      ＋新增資產科目
+    </button>
   </h2>
+
   <div class="card">
     <table class="ie-table">
       <thead>
         <tr>
-          <th class="left">科目</th>
-          <th>期初</th>
-          <th>期末</th>
+          <th class="left" data-i18n="state.colAccount">科目</th>
+          <th data-i18n="state.colBegin">期初</th>
+          <th data-i18n="state.colEnd">期末</th>
           <th class="act"></th>
         </tr>
       </thead>
       <tbody id="assets_body">
         <tr>
-          <td class="left">現金及約當現金</td>
+          <td class="left" data-i18n="state.asset.cash">現金及約當現金</td>
           <td><input type="number" id="cash_begin" value="0" step="1000"></td>
           <td><input type="number" id="cash_end" value="0" step="1000"></td>
           <td></td>
         </tr>
         <tr>
-          <td class="left">應收帳款</td>
+          <td class="left" data-i18n="state.asset.receivable">應收帳款</td>
           <td><input type="number" id="ar_begin" value="0" step="1000"></td>
           <td><input type="number" id="ar_end" value="0" step="1000"></td>
           <td></td>
         </tr>
         <tr>
-          <td class="left">存貨</td>
+          <td class="left" data-i18n="state.asset.inventory">存貨</td>
           <td><input type="number" id="inventory_begin" value="0" step="1000"></td>
           <td><input type="number" id="inventory_end" value="0" step="1000"></td>
           <td></td>
         </tr>
         <tr>
-          <td class="left">不動產、廠房及設備（PPE）</td>
+          <td class="left" data-i18n="state.asset.ppe">不動產、廠房及設備（PPE）</td>
           <td><input type="number" id="ppe_begin" value="0" step="1000"></td>
           <td><input type="number" id="ppe_end" value="0" step="1000"></td>
           <td></td>
@@ -91,28 +99,33 @@
 
   <!-- ③ 負債（Liabilities） -->
   <h2>
-    ③ 負債 (Liabilities)
-    <button class="mini-btn" type="button" onclick="openModal('liabModal')">＋新增負債科目</button>
+    <span data-i18n="state.section3">③ 負債 (Liabilities)</span>
+    <button class="mini-btn" type="button"
+            data-i18n="state.addLiab"
+            onclick="openModal('liabModal')">
+      ＋新增負債科目
+    </button>
   </h2>
+
   <div class="card">
     <table class="ie-table">
       <thead>
         <tr>
-          <th class="left">科目</th>
-          <th>期初</th>
-          <th>期末</th>
+          <th class="left" data-i18n="state.colAccount">科目</th>
+          <th data-i18n="state.colBegin">期初</th>
+          <th data-i18n="state.colEnd">期末</th>
           <th class="act"></th>
         </tr>
       </thead>
       <tbody id="liabs_body">
         <tr>
-          <td class="left">應付帳款</td>
+          <td class="left" data-i18n="state.liability.payable">應付帳款</td>
           <td><input type="number" id="ap_begin" value="0" step="1000"></td>
           <td><input type="number" id="ap_end" value="0" step="1000"></td>
           <td></td>
         </tr>
         <tr>
-          <td class="left">借款（含長短期）</td>
+          <td class="left" data-i18n="state.liability.loan">借款（含長短期）</td>
           <td><input type="number" id="debt_begin" value="0" step="1000"></td>
           <td><input type="number" id="debt_end" value="0" step="1000"></td>
           <td></td>
@@ -124,28 +137,33 @@
 
   <!-- ④ 權益（Equity） -->
   <h2>
-    ④ 權益 (Equity)
-    <button class="mini-btn" type="button" onclick="openModal('equityModal')">＋新增權益科目</button>
+    <span data-i18n="state.section4">④ 權益 (Equity)</span>
+    <button class="mini-btn" type="button"
+            data-i18n="state.addEquity"
+            onclick="openModal('equityModal')">
+      ＋新增權益科目
+    </button>
   </h2>
+
   <div class="card">
     <table class="ie-table">
       <thead>
         <tr>
-          <th class="left">科目</th>
-          <th>期初</th>
-          <th>期末</th>
+          <th class="left" data-i18n="state.colAccount">科目</th>
+          <th data-i18n="state.colBegin">期初</th>
+          <th data-i18n="state.colEnd">期末</th>
           <th class="act"></th>
         </tr>
       </thead>
       <tbody id="equity_body">
         <tr>
-          <td class="left">股本</td>
+          <td class="left" data-i18n="state.equity.capital">股本</td>
           <td><input type="number" id="capital_begin" value="0" step="1000"></td>
           <td><input type="number" id="capital_end" value="0" step="1000"></td>
           <td></td>
         </tr>
         <tr>
-          <td class="left">期初保留盈餘（RE）</td>
+          <td class="left" data-i18n="state.equity.retainedEarnings">期初保留盈餘（RE）</td>
           <td><input type="number" id="re_begin" value="0" step="1000"></td>
           <td></td>
           <td class="act"></td>
@@ -158,36 +176,41 @@
 
   <!-- ⑤ 期間損益科目 -->
   <h2>
-    ⑤ 期間損益科目 (Income & Expenses)
-    <button class="mini-btn" type="button" onclick="openModal('plModal')">＋新增損益科目</button>
+    <span data-i18n="state.section5">⑤ 期間損益科目 (Income & Expenses)</span>
+    <button class="mini-btn" type="button"
+            data-i18n="state.addPL"
+            onclick="openModal('plModal')">
+      ＋新增損益科目
+    </button>
   </h2>
+
   <div class="card">
     <table class="ie-table onecol">
       <thead>
         <tr>
-          <th class="left">科目</th>
-          <th>本期金額</th>
+          <th class="left" data-i18n="state.colAccount">科目</th>
+          <th data-i18n="state.colAmount">本期金額</th>   
           <th class="act"></th>
         </tr>
       </thead>
       <tbody id="pl_body">
         <tr>
-          <td class="left">營業收入</td>
+          <td class="left" data-i18n="state.pl.revenue">營業收入</td>
           <td><input type="number" id="revenue" value="0" step="1000"></td>
           <td></td>
         </tr>
         <tr>
-          <td class="left">營業成本</td>
+          <td class="left" data-i18n="state.pl.cogs">營業成本</td>
           <td><input type="number" id="cogs" value="0" step="1000"></td>
           <td></td>
         </tr>
         <tr>
-          <td class="left">營業費用</td>
+          <td class="left" data-i18n="state.pl.expense">營業費用</td>
           <td><input type="number" id="op_expense" value="0" step="1000"></td>
           <td></td>
         </tr>
         <tr>
-          <td class="left">所得稅費用</td>
+          <td class="left" data-i18n="state.pl.tax">所得稅費用</td>
           <td><input type="number" id="tax_expense" value="0" step="1000"></td>
           <td></td>
         </tr>
@@ -201,78 +224,83 @@
   <input type="hidden" id="other_equity" value="0" />
 
   <!-- ⑥ 預測參數 -->
-  <h2>⑥ 預測參數</h2>
+  <h2 data-i18n="state.section6">⑥ 預測參數</h2>
+
   <div class="card">
     <div class="grid4">
       <div>
-        <label>預測年數（僅 3 或 5）</label>
+        <label data-i18n="state.paramYears">預測年數（僅 3 或 5）</label>
         <select id="fc_years" onchange="renderGrowthInputs()">
-          <option value="3" selected>3 年</option>
-          <option value="5">5 年</option>
+          <option value="3" data-i18n="state.option3years">3 年</option>
+          <option value="5" data-i18n="state.option5years">5 年</option>
         </select>
       </div>
+
       <div>
-        <label>成長率模式</label>
+        <label data-i18n="state.paramGrowthMode">成長率模式</label>
         <select id="growth_mode" onchange="renderGrowthInputs()">
-          <option value="fixed" selected>固定年成長率</option>
-          <option value="custom">自訂每年</option>
+          <option value="fixed" selected data-i18n="state.optionFixedGrowth">固定年成長率</option>
+          <option value="custom" data-i18n="state.optionCustomGrowth">自訂每年</option>
         </select>
       </div>
+
       <div id="growth_inputs"><!-- 動態產生 --></div>
       <div>
-        <label>有效稅率（%）</label>
+        <label data-i18n="state.paramTaxRate">有效稅率（%）</label>
         <input type="number" id="ass_tax_rate" value="20" step="0.1">
       </div>
       <div>
-        <label>折舊率（Dep / 期初PPE, %）</label>
+        <label data-i18n="state.paramDepRate">折舊率（Dep / 期初PPE, %）</label>
         <input type="number" id="ass_dep_rate" value="10" step="0.1">
       </div>
       <div>
-        <label>資本支出 / 營收（%）</label>
+        <label data-i18n="state.paramCapexRate">資本支出 / 營收（%）</label>
         <input type="number" id="ass_capex_rate" value="5" step="0.1">
       </div>
       <div>
-        <label>應收帳款 / 營收（%）</label>
+        <label data-i18n="state.paramARpct">應收帳款 / 營收（%）</label>
         <input type="number" id="ass_ar_pct" value="15" step="0.1">
       </div>
       <div>
-        <label>存貨 / 營業成本（%）</label>
+        <label data-i18n="state.paramInvPct">存貨 / 營業成本（%）</label>
         <input type="number" id="ass_inv_pct" value="10" step="0.1">
       </div>
       <div>
-        <label>應付帳款 / 營業成本（%）</label>
+        <label data-i18n="state.paramAPpct">應付帳款 / 營業成本（%）</label>
         <input type="number" id="ass_ap_pct" value="8" step="0.1">
       </div>
     </div>
+
     <div style="margin-top:12px">
       <button class="btn" onclick="generateForecast()">生成預測財報</button>
       <button class="btn ghost" onclick="exportForecastPDF()">匯出預測（PDF）</button>
     </div>
+
   </div>
 
   <!-- ⑦ 預測結果 -->
-  <h2>⑦ 預測結果</h2>
+  <h2 data-i18n="state.section7">⑦ 預測結果</h2>
 
   <!-- 數字格式設定 -->
   <div class="card" id="number_format_settings" style="margin-bottom:15px;">
-    <h3>數字格式設定</h3>
+    <h3 data-i18n="state.numFormat.title">數字格式設定</h3>
     <div class="row-2col">
       <label>
-        小數位數
+        <span data-i18n="state.numFormat.decimalLabel">小數位數</span>
         <select id="decimal_places">
-          <option value="0">0 位</option>
-          <option value="1">1 位</option>
-          <option value="2">2 位</option>
-          <option value="3" selected>3 位</option>
+          <option value="0" data-i18n="state.numFormat.decimal0">0 位</option>
+          <option value="1" data-i18n="state.numFormat.decimal1">1 位</option>
+          <option value="2" data-i18n="state.numFormat.decimal2">2 位</option>
+          <option value="3" data-i18n="state.numFormat.decimal3" selected>3 位</option>
         </select>
       </label>
 
       <label>
-        進位方式
+        <span data-i18n="state.numFormat.roundLabel">進位方式</span>
         <select id="round_mode">
-          <option value="round" selected>四捨五入</option>
-          <option value="ceil">無條件進位</option>
-          <option value="floor">無條件捨去</option>
+          <option value="round" data-i18n="state.numFormat.round" selected>四捨五入</option>
+          <option value="ceil" data-i18n="state.numFormat.ceil">無條件進位</option>
+          <option value="floor" data-i18n="state.numFormat.floor">無條件捨去</option>
         </select>
       </label>
     </div>
@@ -284,63 +312,137 @@
 <!-- 四個 Modal（內容維持中文） -->
 <div id="assetModal" class="modal" data-section="assets">
   <div class="modal-card">
-    <div class="modal-title">新增 Asset 科目</div>
-    <label class="ck"><input type="checkbox" value="無形資產"> 無形資產 <span class="exists-hint" hidden>（已存在）</span></label>
-    <label class="ck"><input type="checkbox" value="投資性不動產"> 投資性不動產 <span class="exists-hint" hidden>（已存在）</span></label>
-    <label class="ck"><input type="checkbox" value="其他流動資產"> 其他流動資產 <span class="exists-hint" hidden>（已存在）</span></label>
+    <div class="modal-title" data-i18n="state.modal.asset.title">新增 Asset 科目</div>
+
+    <label class="ck">
+      <input type="checkbox" value="無形資產" data-i18n-value="state.modal.asset.intangible">
+      <span data-i18n="state.modal.asset.intangible">無形資產</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
+    <label class="ck">
+      <input type="checkbox" value="投資性不動產" data-i18n-value="state.modal.asset.investment">
+      <span data-i18n="state.modal.asset.investment">投資性不動產</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
+    <label class="ck">
+      <input type="checkbox" value="其他流動資產" data-i18n-value="state.modal.asset.other">
+      <span data-i18n="state.modal.asset.other">其他流動資產</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
     <div class="modal-actions">
-      <button class="btn" onclick="confirmAddFromModal('assets')">確認新增</button>
-      <button class="btn ghost" onclick="closeModal('assetModal')">取消</button>
+      <button class="btn" data-i18n="state.modal.confirm" onclick="confirmAddFromModal('assets')">確認新增</button>
+      <button class="btn ghost" data-i18n="state.modal.cancel" onclick="closeModal('assetModal')">取消</button>
     </div>
+
     <button class="modal-x" onclick="closeModal('assetModal')">×</button>
   </div>
 </div>
 
+
 <div id="liabModal" class="modal" data-section="liabs">
   <div class="modal-card">
-    <div class="modal-title">新增 Liability 科目</div>
-    <label class="ck"><input type="checkbox" value="應付票據"> 應付票據 <span class="exists-hint" hidden>（已存在）</span></label>
-    <label class="ck"><input type="checkbox" value="應付公司債"> 應付公司債 <span class="exists-hint" hidden>（已存在）</span></label>
-    <label class="ck"><input type="checkbox" value="其他流動負債"> 其他流動負債 <span class="exists-hint" hidden>（已存在）</span></label>
+    <div class="modal-title" data-i18n="state.modal.liab.title">新增 Liability 科目</div>
+
+    <label class="ck">
+      <input type="checkbox" value="應付票據" data-i18n-value="state.modal.liab.notesPayable">
+      <span data-i18n="state.modal.liab.notesPayable">應付票據</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
+    <label class="ck">
+      <input type="checkbox" value="應付公司債" data-i18n-value="state.modal.liab.bondsPayable">
+      <span data-i18n="state.modal.liab.bondsPayable">應付公司債</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
+    <label class="ck">
+      <input type="checkbox" value="其他流動負債" data-i18n-value="state.modal.liab.other">
+      <span data-i18n="state.modal.liab.other">其他流動負債</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
     <div class="modal-actions">
-      <button class="btn" onclick="confirmAddFromModal('liabs')">確認新增</button>
-      <button class="btn ghost" onclick="closeModal('liabModal')">取消</button>
+      <button class="btn" data-i18n="state.modal.confirm" onclick="confirmAddFromModal('liabs')">確認新增</button>
+      <button class="btn ghost" data-i18n="state.modal.cancel" onclick="closeModal('liabModal')">取消</button>
     </div>
+
     <button class="modal-x" onclick="closeModal('liabModal')">×</button>
   </div>
 </div>
 
+
 <div id="equityModal" class="modal" data-section="equity">
   <div class="modal-card">
-    <div class="modal-title">新增 Equity 科目</div>
-    <label class="ck"><input type="checkbox" value="資本公積"> 資本公積 <span class="exists-hint" hidden>（已存在）</span></label>
-    <label class="ck"><input type="checkbox" value="庫藏股（負數）"> 庫藏股（負數） <span class="exists-hint" hidden>（已存在）</span></label>
-    <label class="ck"><input type="checkbox" value="其他綜合損益累計"> 其他綜合損益累計 <span class="exists-hint" hidden>（已存在）</span></label>
+    <div class="modal-title" data-i18n="state.modal.equity.title">新增 Equity 科目</div>
+
+    <label class="ck">
+      <input type="checkbox" value="資本公積" data-i18n-value="state.modal.equity.capitalSurplus">
+      <span data-i18n="state.modal.equity.capitalSurplus">資本公積</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
+    <label class="ck">
+      <input type="checkbox" value="庫藏股（負數）" data-i18n-value="state.modal.equity.treasuryStock">
+      <span data-i18n="state.modal.equity.treasuryStock">庫藏股（負數）</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
+    <label class="ck">
+      <input type="checkbox" value="其他綜合損益累計" data-i18n-value="state.modal.equity.oci">
+      <span data-i18n="state.modal.equity.oci">其他綜合損益累計</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
     <div class="modal-actions">
-      <button class="btn" onclick="confirmAddFromModal('equity')">確認新增</button>
-      <button class="btn ghost" onclick="closeModal('equityModal')">取消</button>
+      <button class="btn" data-i18n="state.modal.confirm" onclick="confirmAddFromModal('equity')">確認新增</button>
+      <button class="btn ghost" data-i18n="state.modal.cancel" onclick="closeModal('equityModal')">取消</button>
     </div>
+
     <button class="modal-x" onclick="closeModal('equityModal')">×</button>
   </div>
 </div>
 
+
 <div id="plModal" class="modal" data-section="pl">
   <div class="modal-card">
-    <div class="modal-title">新增 Expense 科目</div>
-    <label class="ck"><input type="checkbox" value="折舊費用"> 折舊費用（由折舊率自動計算） <span class="exists-hint" hidden>（已存在）</span></label>
-    <label class="ck"><input type="checkbox" value="利息費用"> 利息費用 <span class="exists-hint" hidden>（已存在）</span></label>
-    <label class="ck"><input type="checkbox" value="其他收益/費損"> 其他收益/費損 <span class="exists-hint" hidden>（已存在）</span></label>
+    <div class="modal-title" data-i18n="state.modal.pl.title">新增 Expense 科目</div>
+
+    <label class="ck">
+      <input type="checkbox" value="折舊費用" data-i18n-value="state.modal.pl.depreciation">
+      <span data-i18n="state.modal.pl.depreciation">折舊費用（由折舊率自動計算）</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
+    <label class="ck">
+      <input type="checkbox" value="利息費用" data-i18n-value="state.modal.pl.interest">
+      <span data-i18n="state.modal.pl.interest">利息費用</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
+    <label class="ck">
+      <input type="checkbox" value="其他收益/費損" data-i18n-value="state.modal.pl.other">
+      <span data-i18n="state.modal.pl.other">其他收益/費損</span>
+      <span class="exists-hint" hidden data-i18n="state.modal.existsHint">（已存在）</span>
+    </label>
+
     <div class="modal-actions">
-      <button class="btn" onclick="confirmAddFromModal('pl')">確認新增</button>
-      <button class="btn ghost" onclick="closeModal('plModal')">取消</button>
+      <button class="btn" data-i18n="state.modal.confirm" onclick="confirmAddFromModal('pl')">確認新增</button>
+      <button class="btn ghost" data-i18n="state.modal.cancel" onclick="closeModal('plModal')">取消</button>
     </div>
+
     <button class="modal-x" onclick="closeModal('plModal')">×</button>
   </div>
 </div>
+
 <chat-icon></chat-icon>
 
 <script type="module" src="1020.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script type="module" src="src/components/chat-icon/chat-icon.js"></script>
+<script defer src="./language/js/include-header.js"></script>
+<script defer src="./language/js/i18n.js"></script>
 </body>
 </html>

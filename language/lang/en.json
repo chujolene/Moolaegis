@@ -9,9 +9,10 @@
   },
    "nav": {
     "home": "Home",
-    "analysis": "Sensitivity Analysis",
+    "state": "Forecast Report",
     "history": "History",
-    "settings": "Settings"
+    "settings": "Settings",
+    "feedback": "Feedback"
   },
   "ui": { 
     "back": "Back",
@@ -92,5 +93,154 @@
     "resultTitle": "OCR Result (Editable):",
     "resultAria": "OCR result editable text",
     "useThis": "Use This"
+  },
+  "feedback": {
+    "pageTitle": "User Feedback",
+    "title": "User Feedback",
+    "label": "Your comments *",
+    "submit": "Submit Feedback",
+    "history": "My Feedback Records",
+    "none": "No feedback yet"
+  },
+  "history": {
+  "pageTitle": "History Records",
+  "title": "History Records",
+  "uploadTime": "Upload Time",
+  "fileName": "File Name",
+  "actions": "Actions",
+  "delete": "Delete",
+  "view": "View",
+  "none": "No history records yet"
+  },
+  "state": {
+  "pageTitle": "Financial Forecast System",
+  "title": "Financial Forecast System",
+  "subtitle": "Input your reporting period and opening/closing balances to instantly view charts and analyses, and export as PDF.",
+
+  "section1": "① Reporting Period",
+  "startDate": "Start Date *",
+  "endDate": "End Date *",
+
+  "section2": "② Assets",
+  "addAsset": "+ Add Asset Account",
+
+  "section3": "③ Liabilities",
+  "addLiab": "+ Add Liability Account",
+
+  "section4": "④ Equity",
+  "addEquity": "+ Add Equity Account",
+
+  "section5": "⑤ Income & Expense Accounts",
+  "addPL": "+ Add Income/Expense Account",
+
+  "section6": "⑥ Forecast Parameters",
+  "generate": "Generate Forecast",
+  "export": "Export as PDF",
+
+  "section7": "⑦ Forecast Results",
+
+  "colAccount": "Account",
+  "colBegin": "Opening",
+  "colEnd": "Closing",
+  "colAmount": "Current Period Amount",
+
+  "paramYears": "Forecast Years (Only 3 or 5)",
+  "option3years": "3 Years",
+  "option5years": "5 Years",
+
+  "paramGrowthMode": "Growth Rate Mode",
+  "optionFixedGrowth": "Fixed Annual Growth Rate",
+  "optionCustomGrowth": "Custom by Year",
+
+  "paramTaxRate": "Effective Tax Rate (%)",
+  "paramDepRate": "Depreciation Rate (Dep / Beginning PPE, %)",
+  "paramCapexRate": "Capital Expenditure / Revenue (%)",
+  "paramARpct": "Accounts Receivable / Revenue (%)",
+  "paramInvPct": "Inventory / Cost of Goods Sold (%)",
+  "paramAPpct": "Accounts Payable / Cost of Goods Sold (%)",
+
+  "asset": {
+    "cash": "Cash and Cash Equivalents",
+    "receivable": "Accounts Receivable",
+    "inventory": "Inventory",
+    "ppe": "Property, Plant, and Equipment (PPE)"
+  },
+
+  "liability": {
+    "payable": "Accounts Payable",
+    "loan": "Loans (Short-term and Long-term)"
+  },
+
+  "equity": {
+    "capital": "Capital Stock",
+    "retainedEarnings": "Beginning Retained Earnings (RE)"
+  },
+
+  "pl": {
+    "revenue": "Operating Revenue",
+    "cogs": "Cost of Goods Sold (COGS)",
+    "expense": "Operating Expenses",
+    "tax": "Income Tax Expense"
+  },
+
+  "numFormat": {
+    "title": "Number Format Settings",
+    "decimalLabel": "Decimal Places",
+    "decimal0": "0 digits",
+    "decimal1": "1 digit",
+    "decimal2": "2 digits",
+    "decimal3": "3 digits",
+    "roundLabel": "Rounding Mode",
+    "round": "Round to Nearest",
+    "ceil": "Round Up (Ceil)",
+    "floor": "Round Down (Floor)"
+  },
+
+  "modal": {
+    "asset": {
+      "title": "Add Asset Accounts",
+      "intangible": "Intangible Assets",
+      "investment": "Investment Property",
+      "other": "Other Current Assets"
+    },
+    "liab": {
+      "title": "Add Liability Accounts",
+      "notesPayable": "Notes Payable",
+      "bondsPayable": "Bonds Payable",
+      "other": "Other Current Liabilities"
+    },
+    "equity": {
+      "title": "Add Equity Accounts",
+      "capitalSurplus": "Capital Surplus",
+      "treasuryStock": "Treasury Stock (Negative)",
+      "oci": "Accumulated Other Comprehensive Income (AOCI)"
+    },
+    "pl": {
+      "title": "Add Income & Expense Accounts",
+      "depreciation": "Depreciation Expense",
+      "interest": "Interest Expense",
+      "other": "Other Income/Expense"
+    },
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "existsHint": "(Already Exists)"
+  },
+
+  "alert": {
+    "requiredField": "Required field cannot be empty",
+    "generateSuccess": "Forecast generated successfully",
+    "pdfSuccess": "PDF exported successfully",
+    "pdfFail": "Failed to export PDF"
+  },
+  "analysis": {
+    "revenueTitle": "Annual Operating Revenue",
+    "summaryTitle": "Key Summary (Multi-Year)",
+    "cfTitle": "Cash Flow Structure",
+    "cccTitle": "Operating Efficiency (CCC)",
+    "ratioTitle": "Key Financial Ratios",
+    "commonTitle": "Common-Size Statements",
+    "bscheckTitle": "Balance Sheet Consistency Check"
   }
+}
+
 }

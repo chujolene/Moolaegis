@@ -153,11 +153,12 @@
   "optionCustomGrowth": "Custom by Year",
 
   "paramTaxRate": "Effective Tax Rate (%)",
-  "paramDepRate": "Depreciation Rate (Dep / Beginning PPE, %)",
-  "paramCapexRate": "Capital Expenditure / Revenue (%)",
-  "paramARpct": "Accounts Receivable / Revenue (%)",
-  "paramInvPct": "Inventory / Cost of Goods Sold (%)",
-  "paramAPpct": "Accounts Payable / Cost of Goods Sold (%)",
+  "paramDepRate": "Depreciation Rate (%)",
+  "paramCapexRate": "Capital Expenditure (%)",
+  "paramARpct": "Accounts Receivable (%)",
+  "paramInvPct": "Inventory (%)",
+  "paramAPpct": "Accounts Payable (%)",
+    "paramInterestRate": "Interest Rate (%)",
 
   "asset": {
     "cash": "Cash and Cash Equivalents",

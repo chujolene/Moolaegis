@@ -425,7 +425,7 @@ class ChatIconComponent extends HTMLElement {
             this.addMessage('bot', 'Sorry, I encountered an error. Please try again.');
         }
     }
-
+    /*
     addMessage(sender, text) {
         const messagesContainer = this.querySelector('#messages');
         if (!messagesContainer) return;
@@ -440,6 +440,26 @@ class ChatIconComponent extends HTMLElement {
         messagesContainer.appendChild(messageDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
+    */
+    addMessage(sender, text) {
+        const messagesContainer = this.querySelector('#messages');
+        if (!messagesContainer) return;
+
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${sender}-message`;
+
+        // 如果是機器人訊息，用 marked() 轉換 markdown → HTML
+        const renderedContent = sender === 'bot' ? marked.parse(text) : text;
+
+        messageDiv.innerHTML = `
+            <div class="message-content">${renderedContent}</div>
+            <div class="message-time">${new Date().toLocaleTimeString()}</div>
+        `;
+
+        messagesContainer.appendChild(messageDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
 
     addTypingMessage() {
         const messagesContainer = this.querySelector('#messages');

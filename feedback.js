@@ -39,10 +39,19 @@ function setEmpty() {
 // 時間轉台灣本地顯示
 function formatTimeISOToLocal(isoString) {
   const d = new Date(isoString);
-  return isNaN(d.getTime())
-    ? "-"
-    : d.toLocaleString("zh-TW", { timeZone: "Asia/Taipei" });
+  if (isNaN(d.getTime())) return "-";
+
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  const hour = String(d.getHours()).padStart(2, "0");
+  const minute = String(d.getMinutes()).padStart(2, "0");
+  const second = String(d.getSeconds()).padStart(2, "0");
+
+  // ✅ 統一為 yyyy/mm/dd HH:MM:SS 24小時制
+  return `${year}/${month}/${day} ${hour}:${minute}:${second}`;
 }
+
 
 // XSS 簡單轉義
 function escapeHTML(str) {
@@ -93,7 +102,6 @@ function renderList(items) {
       (it) => `
       <div class="feedback-item" data-id="${it.id}">
         <div class="feedback-header">
-          <span class="feedback-user">${escapeHTML(it.user ?? "我")}</span>
           <span class="feedback-time">${formatTimeISOToLocal(it.time)}</span>
           <div class="feedback-actions">
             <button class="feedback-delete" data-del-id="${it.id}">刪除</button>

@@ -1,5 +1,32 @@
 import { API_BASE_URL } from "./config.js";
 
+/* ---------- 多語系載入 ---------- */
+let currentLang = localStorage.getItem('lang') || 'zh'; // 預設中文
+let i18nData = {};
+
+async function loadI18n() {
+  try {
+    const response = await fetch(currentLang === 'zh' ? './zh.json' : './en.json');
+    i18nData = await response.json();
+  } catch (e) {
+    console.error('Failed to load language file:', e);
+  }
+}
+
+// 初始化
+await loadI18n();
+
+/* 簡單取用文字的輔助函式 */
+function t(keyPath) {
+  const keys = keyPath.split('.');
+  let val = i18nData;
+  for (const k of keys) {
+    if (val && k in val) val = val[k];
+    else return keyPath; // 找不到時顯示原 key
+  }
+  return val;
+}
+
 if (typeof window !== 'undefined') {
   window.openModal = openModal;
   window.closeModal = closeModal;
@@ -43,123 +70,133 @@ if (typeof window !== 'undefined') {
     for(const id of req){
       const el = document.getElementById(id);
       if(!el || String(el.value).trim()===''){
-        alert('★ 必填欄位不可留空：'+id); return false;
+        alert('★ ' + t('state.alert.requiredField') + ': ' + id); 
+        return false;
       }
     }
     return true;
   }
 
 /* === 核心預測 === */
-  function runForecast(years, gArr, ass){
+function runForecast(years, gArr, ass) {
 
-    // === 基期損益 ===
-    const rev0=getVal('revenue'), 
-          cogs0=getVal('cogs'), 
-          opex0=getVal('op_expense'), 
-          oi0=getVal('other_income');
-    const int0=getVal('interest_expense'), 
-          tax0=getVal('tax_expense');
-    const opInc0=rev0-cogs0-opex0+oi0, pretax0=opInc0-int0, net0=(pretax0 - tax0);
+  // === 會計科目讀取 ===
+  const rev0 = getVal('revenue'), //營業收入
+        cogs0 = getVal('cogs'), //營業成本
+        opex0 = getVal('op_expense'), //營業費用
+        int0 = getVal('interest_expense'), //利息費用
+        tax0 = getVal('tax_expense'), //所得稅費用
+        CAPITAL0 = getVal('capital_end'); // 股本(期末)
+  let CASH = getVal('cash_end'), // 現金及約當現金(期末)
+        AR = getVal('ar_end'), // 應收帳款(期末)
+        INV = getVal('inventory_end'), // 存貨(期末)
+        PPE = getVal('ppe_end'), // 不動產、廠房及設備(期末)
+        AP = getVal('ap_end'), // 應付帳款(期末)
+        DEBT0 = getVal('debt_end'); // 借款（含長短期）(期末)
 
-    // === 基期資產負債 ===
-    const RE0=getVal('re_begin') + net0;
-    let CASH=getVal('cash_end'), AR=getVal('ar_end'), INV=getVal('inventory_end'), PPE=getVal('ppe_end');
-    let AP=getVal('ap_end'), DEBT0=getVal('debt_end');
-    const CAPITAL0 = getVal('capital_end');
+  // === 基期綜合損益表 ===
+  const grossProfit0 = rev0 - cogs0;  // === 營業毛利 = 營業收入 - 營業成本
+  const pretax0 = grossProfit0 - opex0 - int0; // === 稅前淨利 = 營業毛利 - 營業費用 - 利息費用
+  const net0 = pretax0 - tax0; // === 本期淨利 = 稅前淨利 - 所得稅費用
 
-    // === 自訂科目合計 ===
-    const staticAssets=[{name:'Other Assets',val:getVal('other_assets')}];
-    const staticLiabs=[{name:'Other Liabilities',val:getVal('other_liabs')}];
-    const staticEquity=[{name:'Other Equity',val:getVal('other_equity')}];
+  // === 基期資產負債表 ===
+  const RE0 = getVal('re_begin') + net0; // === 保留盈餘 = 期初保留盈餘 + 本期淨利
 
-    const cogsPct = rev0>0 ? cogs0/rev0 : 0;
-    const opexPct = rev0>0 ? opex0/rev0 : 0;
-    const oiPct   = rev0>0 ? oi0/rev0   : 0;
+  // === 基期現金流量表 ===
+  const arflow = getVal('ar_end') - getVal('ar_begin'); //應收帳款現金流
+  const invenflow = getVal('inventory_end') - getVal('inventory_begin'); //存貨現金流
+  const apflow = getVal('ap_end') - getVal('ap_begin'); //應付帳款現金流
+  const CFO0 = net0 + arflow + invenflow + apflow; // === 營業活動現金流淨額 = 本期淨利 + 應收帳款現金流 + 存貨現金流 + 應付帳款現金流
+  const ppeflow = getVal('ppe_end') - getVal('ppe_begin'); //不動產現金流
+  const CFI0 = ppeflow; // === 投資活動現金流淨額 = 不動產現金流
+  const debtflow = getVal('debt_end') - getVal('debt_begin'); //借款現金流
+  const capflow = getVal('capital_end') - getVal('capital_begin'); // 股本現金流
+  const CFF0 = debtflow + capflow; // === 融資活動現金流淨額 = 借款現金流 + 股本現金流()
+  // 折舊(?)
 
-    let NWC_prev = (AR + INV - AP);
-    let RE=RE0;
+  // === 自訂科目合計(目前沒有用到) ===
+  /*
+  const staticAssets = [{ name: 'Other Assets', val: getVal('other_assets') }];
+  const staticLiabs = [{ name: 'Other Liabilities', val: getVal('other_liabs') }];
+  const staticEquity = [{ name: 'Other Equity', val: getVal('other_equity') }];
+  */
 
-    const rows=[];
-    const baseYear=yearFromDateStr(fmtDate('period_end'), (new Date()).getFullYear());
+  const cogsPct = rev0 > 0 ? cogs0 / rev0 : 0;
+  const opexPct = rev0 > 0 ? opex0 / rev0 : 0;
 
-    // === 動態週轉率假設參數 ===
-    const baseDSO = ass.baseDSO || 50;   // 基期 DSO
-    const baseDIO = ass.baseDIO || 40;   // 基期 DIO
-    const baseDPO = ass.baseDPO || 30;   // 基期 DPO
-    const α = 0.05, β = 0.1, γ = 0.3, δ = 0.05; // 可調整參數
+  let NWC_prev = (AR + INV - AP);
+  let RE = RE0;
 
-    // === Step 1: 存入基期年 (Year 0) ===
-    const baseDSOVal = baseDSO;
-    const baseDIOVal = baseDIO;
-    const baseDPOVal = baseDPO;
-    const baseCCC    = baseDSOVal + baseDIOVal - baseDPOVal;
+  const rows = [];
+  const baseYear = yearFromDateStr(fmtDate('period_end'), (new Date()).getFullYear());
+
+  // === Step 1: 存入基期年 (Year 0) ===
+  rows.push({
+    year: baseYear,
+    revenue: rev0,
+    cogs: cogs0,
+    opex: opex0,
+    Dep: 0, CapEx: 0, intExp: int0,
+    pretax: pretax0, tax: tax0, net: net0,
+    CFO: 0, CFI: 0, CFF: 0,
+    cash: CASH, AR, INV, AP, PPE, RE: RE0, dNWC: 0,
+    deltaAR: 0, deltaInventory: 0, deltaAP: 0
+  });
+
+  // === Step 2: 預測未來 N 年 (Year 1 → Year N) ===
+  for (let i = 1; i <= years; i++) {
+    const growth = gArr[i - 1] ?? 0;
+    const year = baseYear + i;
+
+    // 損益表項目
+    const revenue = (i === 1 ? rev0 : rows[i - 1].revenue) * (1 + growth);
+    const cogs = revenue * cogsPct;
+    const opex = revenue * opexPct;
+
+    const Dep  = PPE * ass.depRate;
+    const CapEx = revenue * ass.capexRate;
+    const intExp = int0;
+    const pretax = revenue - cogs - opex - Dep - intExp;
+    const tax = Math.max(0, pretax) * ass.taxRate;
+    const net = pretax - tax;
+
+    RE = RE + net;
+
+    // === 使用使用者輸入的比例計算應收 / 存貨 / 應付 ===
+    const AR_prev = AR, INV_prev = INV, AP_prev = AP;
+    AR  = revenue * ass.arPct;
+    INV = cogs * ass.invPct;
+    AP  = cogs * ass.apPct;
+
+    // === 各項變動金額（現金流量調整用） ===
+    const deltaAR = AR - AR_prev;
+    const deltaInventory = INV - INV_prev;
+    const deltaAP = AP - AP_prev;
+
+    // === 營運資金與現金流 ===
+    const NWC = AR + INV - AP;
+    const dNWC = NWC - NWC_prev;
+    NWC_prev = NWC;
+
+    const CFO = net + Dep - dNWC;
+    const CFI = -CapEx;
+    const CFF = 0;
+
+    CASH = CASH + CFO + CFI + CFF;
+    PPE  = PPE + CapEx - Dep;
 
     rows.push({
-      year: baseYear,
-      revenue: rev0,
-      cogs: cogs0,
-      opex: opex0,
-      oi: oi0,
-      Dep: 0, CapEx: 0, intExp: int0,
-      pretax: pretax0, tax: tax0, net: net0,
-      CFO: 0, CFI: 0, CFF: 0,
-      cash: CASH, AR, INV, AP, PPE, RE: RE0, dNWC: 0,
-      DSO: baseDSOVal, DIO: baseDIOVal, DPO: baseDPOVal, CCC: baseCCC
+      year, revenue, cogs, opex, Dep, CapEx, intExp, pretax, tax, net,
+      CFO, CFI, CFF, cash: CASH, AR, INV, AP, PPE, RE, dNWC,
+      deltaAR, deltaInventory, deltaAP
     });
-
-    // === Step 2: 預測未來 N 年 (Year 1 → Year N) ===
-    for(let i=1;i<=years;i++){
-      const growth = gArr[i-1] ?? 0;
-      const year = baseYear + i;
-
-      // 損益表項目
-      const revenue = (i===1 ? rev0 : rows[i-1].revenue) * (1+growth);
-      const cogs = revenue * cogsPct;
-      const opex = revenue * opexPct;
-      const oi   = revenue * oiPct;
-
-      const Dep  = PPE * ass.depRate;
-      const CapEx= revenue * ass.capexRate;
-      const intExp = int0;
-      const pretax = revenue - cogs - opex - Dep + oi - intExp;
-      const tax = Math.max(0, pretax) * ass.taxRate;
-      const net = pretax - tax;
-
-      RE = RE + net;
-
-      // 動態週轉率
-      const DSO = baseDSO * (1 + α * (i/years));
-      const DIO = baseDIO * (1 + β * Math.exp(-γ*i));
-      const DPO = baseDPO * (1 + δ * Math.log(1+i));
-      const CCC = DSO + DIO - DPO;
-
-      // 應收 / 存貨 / 應付
-      AR  = (revenue/365) * DSO;
-      INV = (cogs/365) * DIO;
-      AP  = (cogs/365) * DPO;
-
-      // 營運資金
-      const NWC = AR + INV - AP;
-      const dNWC = NWC - NWC_prev;
-      NWC_prev = NWC;
-
-      // 現金流
-      const CFO = net + Dep - dNWC;
-      const CFI = -CapEx;
-      const CFF = 0;
-      CASH = CASH + CFO + CFI + CFF;
-      PPE  = PPE + CapEx - Dep;
-
-      // 存入年度結果
-      rows.push({
-        year, revenue, cogs, opex, oi, Dep, CapEx, intExp, pretax, tax, net,
-        CFO, CFI, CFF, cash:CASH, AR, INV, AP, PPE, RE, dNWC,
-        DSO, DIO, DPO, CCC
-      });
-    }
-
-    return { rows, constants:{ DEBT: DEBT0, CAPITAL: CAPITAL0, staticAssets, staticLiabs, staticEquity } };
   }
+
+  return {
+    rows,
+    constants: { DEBT: DEBT0, CAPITAL: CAPITAL0}
+  };
+}
 
 
 /* ---------- 千分位格式化 ---------- */
@@ -183,160 +220,6 @@ if (typeof window !== 'undefined') {
       }
     });
   }
-
-  
-
-/* ---------- 自訂列加總 ---------- */
-function addCustomRow(section){
-  const map = {
-    assets: {tbody:'assets_body',  extraKey:'assets'},
-    liabs:  {tbody:'liabs_body',   extraKey:'liabs'},
-    equity: {tbody:'equity_body',  extraKey:'equity'},
-    pl:     {tbody:'pl_body',      extraKey:'pl'}
-  };
-  const cfg = map[section]; if(!cfg) return;
-  const tr = document.createElement('tr');
-  tr.setAttribute('data-extra', cfg.extraKey);
-  tr.innerHTML = `
-    <td class="left"><input type="text" class="name-input" placeholder="自訂科目" /></td>
-    ${section==='pl'
-      ? `<td><input type="number" class="onecol-val" value="0" step="1000"></td>`
-      : `<td><input type="number" class="beg" value="0" step="1000"></td>
-         <td><input type="number" class="end" value="0" step="1000"></td>`}
-    <td class="act"><button class="link" type="button" onclick="removeRow(this)">刪除</button></td>
-  `;
-  document.getElementById(cfg.tbody).appendChild(tr);
-  tr.addEventListener('input', computeAggregates);
-  bindThousandsFormat();
-  computeAggregates();
-}
-function removeRow(btn){ const tr = btn.closest('tr'); tr?.parentNode?.removeChild(tr); computeAggregates(); }
-function computeAggregates(){
-  const num = (el) => {
-    const raw = (el?.value || '').replace(/,/g,'');
-    const v = parseFloat(raw);
-    return isNaN(v) ? 0 : v;
-  };
-  const sumOf = (selector) => {
-    let s = 0;
-    document.querySelectorAll(selector).forEach(tr=>{
-      const end = tr.querySelector('input.end');
-      s += num(end);
-    });
-    return s;
-  };
-
-  document.getElementById('other_assets').value = String(sumOf('tr[data-extra="assets"]'));
-  document.getElementById('other_liabs').value  = String(sumOf('tr[data-extra="liabs"]'));
-  document.getElementById('other_equity').value = String(sumOf('tr[data-extra="equity"]'));
-}
-
-/* ---------- Modal（含防重複） ---------- */
-function openModal(id){
-  const m=document.getElementById(id);
-  if(!m) return;
-  const section = m.getAttribute('data-section');
-  prepareModalSelections(m, section);
-  m.style.display='flex';
-}
-function closeModal(id){
-  const m=document.getElementById(id);
-  if(!m) return;
-  m.querySelectorAll('input[type=checkbox]:not(:disabled)').forEach(cb=>cb.checked=false);
-  m.style.display='none';
-}
-function prepareModalSelections(modalEl, section){
-  const tbodyIdMap = { assets:'assets_body', liabs:'liabs_body', equity:'equity_body', pl:'pl_body' };
-  const tbody = document.getElementById(tbodyIdMap[section]);
-  const existNames = new Set();
-  if (tbody) {
-    tbody.querySelectorAll('td.left').forEach(td=>{
-      const name = td.textContent.trim();
-      if (name) existNames.add(name);
-    });
-  }
-  modalEl.querySelectorAll('label.ck').forEach(label=>{
-    const cb = label.querySelector('input[type=checkbox]');
-    const hint = label.querySelector('.exists-hint');
-    const name = cb.value.trim();
-    if (existNames.has(name)) {
-      cb.checked = true; cb.disabled = true;
-      label.classList.add('ck-disabled'); if (hint) hint.hidden = false;
-      label.setAttribute('title','該科目已在清單中，不能重複新增');
-    } else {
-      cb.disabled = false; cb.checked  = false;
-      label.classList.remove('ck-disabled'); if (hint) hint.hidden = true;
-      label.removeAttribute('title');
-    }
-  });
-}
-window.addEventListener('click', (e)=>{
-  document.querySelectorAll('.modal').forEach(m=>{ if(e.target===m){ closeModal(m.id); } });
-});
-function confirmAddFromModal(section){
-  const ids = {
-    assets: { modal:'assetModal',  tbody:'assets_body', extra:'assets' },
-    liabs:  { modal:'liabModal',   tbody:'liabs_body',  extra:'liabs'  },
-    equity: { modal:'equityModal', tbody:'equity_body', extra:'equity' },
-    pl:     { modal:'plModal',     tbody:'pl_body',     extra:'pl'     },
-  };
-  const cfg=ids[section]; if(!cfg) return;
-  const modal = document.getElementById(cfg.modal);
-  const checks = [...modal.querySelectorAll('input[type=checkbox]:checked:not(:disabled)')];
-
-  /* ===== 修正處：PL（損益）勾選項目改為直接插入輸入列 ===== */
-  if(section==='pl'){
-    let createdInfo=false;
-
-    // 在 PL 表尾新增一列（若已存在相同 id 就不重複新增）
-    const ensurePLRow = (id, label) => {
-      if (document.getElementById(id)) return; // 已存在就不再新增
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td class="left">${label}</td>
-        <td><input type="number" id="${id}" value="0" step="1000"></td>
-        <td class="act">
-          <button class="link" type="button" onclick="removeRow(this)">刪除</button>
-        </td>`;
-      document.getElementById('pl_body').appendChild(tr);
-      bindThousandsFormat(); 
-    };
-
-    checks.forEach(cb=>{
-      const v = cb.value.trim();
-      if(v.includes('折舊')) {
-        createdInfo = true; // 折舊依折舊率自動計算，不需輸入列
-      } else if (v.includes('利息')) {
-        ensurePLRow('interest_expense','利息費用');
-      } else { // 其他收益/費損
-        ensurePLRow('other_income','其他收益/費損');
-      }
-      cb.checked=false;
-    });
-
-    closeModal(cfg.modal);
-    if(createdInfo){ alert('「折舊費用」將依「折舊率（Dep / 期初 PPE）」自動計算，無需輸入。'); }
-    return;
-  }
-  /* ===== 修正處結束 ===== */
-
-  const tbody=document.getElementById(cfg.tbody);
-  checks.forEach(cb=>{
-    const tr=document.createElement('tr');
-    tr.setAttribute('data-extra', cfg.extra);
-    tr.innerHTML=`
-      <td class="left">${cb.value}</td>
-      <td><input type="number" class="beg" value="0" step="1000"></td>
-      <td><input type="number" class="end" value="0" step="1000"></td>
-      <td class="act"><button class="link" type="button" onclick="removeRow(this)">刪除</button></td>`;
-    tbody.appendChild(tr);
-    tr.addEventListener('input', computeAggregates);
-    bindThousandsFormat();
-    cb.checked=false;
-  });
-  computeAggregates();
-  closeModal(cfg.modal);
-}
 
 /* ---------- 成長率 UI ---------- */
 function renderGrowthInputs(){
@@ -370,10 +253,6 @@ function readGrowthArray(n){
     return arr;
   }
 }
-
-
-
-
 
 
 /* ---------- 圖表/表格輸出 ---------- */
@@ -455,9 +334,6 @@ function makeKPI(container, baseRevenue, baseNet, rows){
 
 /* ---------- 各年度報表比較 ---------- */
 function renderSummaryMatrix(container, rows, constants){
-  const SA   = constants.staticAssets[0].val || 0;
-  const SL   = constants.staticLiabs[0].val  || 0;
-  const EQO  = constants.staticEquity[0].val || 0;
   const DEBT = constants.DEBT || 0;
   const CAP  = constants.CAPITAL || 0;
   const headers = rows.map(r=>`<th>${r.year}</th>`).join('');
@@ -474,7 +350,6 @@ function renderSummaryMatrix(container, rows, constants){
         ${line('營業收入', r=>r.revenue)}
         ${line('營業成本', r=>r.cogs)}
         ${line('營業費用', r=>r.opex)}
-        ${line('其他收益', r=>r.oi)}
         ${line('折舊',     r=>r.Dep)}
         ${line('利息費用', r=>r.intExp)}
         ${line('稅前淨利', r=>r.pretax)}
@@ -490,16 +365,13 @@ function renderSummaryMatrix(container, rows, constants){
         ${line('現金',  r=>r.cash)}
         ${line('應收帳款', r=>r.AR)}
         ${line('存貨',    r=>r.INV)}
-        ${line('不動產、廠房及設備（PPE）', r=>r.PPE)}
-        ${line('其他資產',        _=>SA)}
-        ${line('總資產',          r=>r.cash+r.AR+r.INV+r.PPE+SA)}
+        ${line('不動產、廠房及設備', r=>r.PPE)}
+        ${line('總資產',          r=>r.cash+r.AR+r.INV+r.PPE)}
         ${line('應付帳款',        r=>r.AP)}
         ${line('借款',            _=>DEBT)}
-        ${line('其他負債',        _=>SL)}
         ${line('股本',            _=>CAP)}
         ${line('保留盈餘',        r=>r.RE)}
-        ${line('其他權益',        _=>EQO)}
-        ${line('負債＋權益',      r=>r.AP+DEBT+SL+CAP+r.RE+EQO)}
+        ${line('負債＋權益',      r=>r.AP+DEBT+CAP+r.RE)}
       </table>
     </div>
 
@@ -520,67 +392,88 @@ function renderSummaryMatrix(container, rows, constants){
   `;
 }
 
-
+/* ====== 每一年三大報表 ===== */
 function renderYearSections(root, rows, constants){
   rows.forEach(r=>{
     const sec=document.createElement('details');
     sec.open=false;
     sec.innerHTML = `
-      <summary>${r.year} 年度三表</summary>
+      <summary>${r.year} 年度三表 </summary>
+
       <div class="year-grid">
+
         <div class="card">
           <h3>損益表（${r.year}）</h3>
-          <table>
+          <table class="ie-table">
             <tr><td>營業收入</td><td>${formatNumberCustom(r.revenue)}</td></tr>
-            <tr><td>營業成本</td><td>${formatNumberCustom(r.cogs)}</td></tr>
-            <tr><td>營業費用</td><td>${formatNumberCustom(r.opex)}</td></tr>
-            <tr><td>其他收益</td><td>${formatNumberCustom(r.oi)}</td></tr>
-            <tr><td>折舊</td><td>${formatNumberCustom(r.Dep)}</td></tr>
-            <tr><td>利息費用</td><td>${formatNumberCustom(r.intExp)}</td></tr>
-            <tr class="total-row"><td>稅前淨利</td><td>${formatNumberCustom(r.pretax)}</td></tr>
-            <tr><td>所得稅費用</td><td>${formatNumberCustom(r.tax)}</td></tr>
-            <tr class="total-row"><td>本期淨利</td><td>${formatNumberCustom(r.net)}</td></tr>
+            <tr><td>營業成本</td><td>(${formatNumberCustom(r.cogs)})</td></tr>
+            <tr class="total-row"><td> 營業毛利</td><td>${formatNumberCustom(r.revenue - r.cogs)}</td></tr>
+            <tr><td>營業費用</td><td>(${formatNumberCustom(r.opex)})</td></tr>
+            <tr><td>折舊費用</td><td>(${formatNumberCustom(r.Dep)})</td></tr>
+            <tr><td>利息費用</td><td>(${formatNumberCustom(r.intExp)})</td></tr>
+            <tr class="total-row"><td> 稅前淨利</td><td>${formatNumberCustom(r.pretax)}</td></tr>
+            <tr><td>所得稅費用</td><td>(${formatNumberCustom(r.tax)})</td></tr>
+            <tr class="total-row"><td> 本期淨利</td><td>${formatNumberCustom(r.net)}</td></tr>
           </table>
         </div>
+
         <div class="card">
-            <h3>資產負債表（${r.year} 期末）</h3>
-            <table>
-                <tr><td>現金</td><td>${formatNumberCustom(r.cash)}</td></tr>
-                <tr><td>應收帳款</td><td>${formatNumberCustom(r.AR)}</td></tr>
-                <tr><td>存貨</td><td>${formatNumberCustom(r.INV)}</td></tr>
-                <tr><td>不動產、廠房及設備（PPE）</td><td>${formatNumberCustom(r.PPE)}</td></tr>
-                <tr><td>其他資產</td><td>${formatNumberCustom(constants.staticAssets[0].val)}</td></tr>
-                <tr class="total-row"><td>總資產</td><td>${
-                    formatNumberCustom(r.cash + r.AR + r.INV + r.PPE + constants.staticAssets[0].val)
-                }</td></tr>
-                <tr><td>應付帳款</td><td>${formatNumberCustom(r.AP)}</td></tr>
-                <tr><td>借款</td><td>${formatNumberCustom(constants.DEBT)}</td></tr>
-                <tr><td>其他負債</td><td>${formatNumberCustom(constants.staticLiabs[0].val)}</td></tr>
-                <tr><td>股本</td><td>${formatNumberCustom(constants.CAPITAL)}</td></tr>
-                <tr><td>保留盈餘</td><td>${formatNumberCustom(r.RE)}</td></tr>
-                <tr><td>其他權益</td><td>${formatNumberCustom(constants.staticEquity[0].val)}</td></tr>
-                <tr class="total-row"><td>負債＋權益</td><td>${
-                    formatNumberCustom(r.AP + constants.DEBT + constants.staticLiabs[0].val + constants.CAPITAL + r.RE + constants.staticEquity[0].val)
-                }</td></tr>
-            </table>
+          <h3>資產負債表（${r.year} 期末）</h3>
+          <table class="ie-table">
+            <tr><td>現金</td><td>${formatNumberCustom(r.cash)}</td></tr>
+            <tr><td>應收帳款</td><td>${formatNumberCustom(r.AR)}</td></tr>
+            <tr><td>存貨</td><td>${formatNumberCustom(r.INV)}</td></tr>
+            <tr><td>不動產、廠房及設備</td><td>${formatNumberCustom(r.PPE)}</td></tr>
+            <tr class="total-row"><td> 總資產</td><td>${formatNumberCustom(r.cash + r.AR + r.INV + r.PPE)}</td></tr>
+            <tr><td>應付帳款</td><td>${formatNumberCustom(r.AP)}</td></tr>
+            <tr><td>借款</td><td>${formatNumberCustom(constants.DEBT)}</td></tr>
+            <tr><td>股本</td><td>${formatNumberCustom(constants.CAPITAL)}</td></tr>
+            <tr><td>保留盈餘</td><td>${formatNumberCustom(r.RE)}</td></tr>
+            <tr class="total-row"><td> 負債＋權益</td><td>${formatNumberCustom(r.AP + constants.DEBT + constants.CAPITAL + r.RE)}</td></tr>
+          </table>
         </div>
+
         <div class="card">
-            <h3>現金流量表（${r.year}）</h3>
-            <table>
-                <tr><td>本期淨利</td><td>${formatNumberCustom(r.net)}</td></tr>
-                <tr><td>(+) 折舊</td><td>${formatNumberCustom(r.Dep)}</td></tr>
-                <tr><td>(−/+) 營運資金變動</td><td>${formatNumberCustom(-r.dNWC)}</td></tr>
-                <tr class="total-row"><td>營運現金流（CFO）</td><td>${formatNumberCustom(r.CFO)}</td></tr>
-                <tr><td>(−) 資本支出（CapEx）</td><td>${formatNumberCustom(Math.abs(r.CFI))}</td></tr>
-                <tr class="total-row"><td>投資現金流（CFI）</td><td>${formatNumberCustom(r.CFI)}</td></tr>
-                <tr class="total-row"><td>期末現金</td><td>${formatNumberCustom(r.cash)}</td></tr>
-            </table>
-            </div>
+          <h3>現金流量表（${r.year}）</h3>
+          <table class="ie-table">
+          <!-- 營業活動現金流量 -->
+            <tr><td colspan="2" class="section-header">營業活動現金流量</td></tr>
+            <tr><td>本期淨利</td><td>${formatNumberCustom(r.net)}</td></tr>
+            <tr><td>調整：</td><td></td></tr>
+            <tr><td>　應收帳款</td>
+              <td>${(v => v < 0 ? '(' + formatNumberCustom(Math.abs(v)) + ')' : formatNumberCustom(v))(-r.deltaAR)}</td></tr>
+            <tr><td>　存貨</td>
+              <td>${(v => v < 0 ? '(' + formatNumberCustom(Math.abs(v)) + ')' : formatNumberCustom(v))(-r.deltaInventory)}</td></tr>
+            <tr><td>　應付帳款</td>
+              <td>${(v => v < 0 ? '(' + formatNumberCustom(Math.abs(v)) + ')' : formatNumberCustom(v))(r.deltaAP)}</td></tr>
+            <tr><td>　折舊費用</td>
+              <td>${(v => v < 0 ? '(' + formatNumberCustom(Math.abs(v)) + ')' : formatNumberCustom(v))(r.Dep)}</td></tr>
+            <tr class="subtotal"><td><b>營業活動現金流量淨額（CFO）</b></td><td><b>${formatNumberCustom(r.CFO)}</b></td></tr>
+
+
+            <!-- 投資活動現金流量 -->
+            <tr><td colspan="2" class="section-header">投資活動現金流量</td></tr>
+            <tr><td>不動產、廠房及設備（PPE）</td><td>${formatNumberCustom(r.CFI)}</td></tr>
+            <tr class="subtotal"><td><b>投資活動現金流量淨額（CFI）</b></td><td><b>${formatNumberCustom(r.CFI)}</b></td></tr>
+
+            <!-- 融資活動現金流量 -->
+            <tr><td colspan="2" class="section-header">融資活動現金流量</td></tr>
+            <tr><td>借款（含長短期）</td><td>${formatNumberCustom(r.deltaDebt)}</td></tr>
+            <tr><td>現金股利</td><td>${formatNumberCustom(r.dividend)}</td></tr>
+            <tr class="subtotal"><td><b>融資活動現金流量淨額（CFF）</b></td><td><b>${formatNumberCustom(r.CFF)}</b></td></tr>
+
+            <!-- 合計與期末現金 -->
+            <tr><td colspan="2"><hr class="soft"></td></tr>
+            <tr class="total-row"><td><b>期末現金及約當現金</b></td><td><b>${formatNumberCustom(r.cash)}</b></td></tr>
+          </table>
+        </div>
+
       </div>
     `;
     root.appendChild(sec);
   });
 }
+
 
 /* ---------- 其他圖表與分析 ---------- */
 function makeStackedCFChart(canvasId, rows){
@@ -662,6 +555,7 @@ function renderCCC(kpiId, chartId, rows){
   });
 }
 
+/* ===== 計算比率 ===== */
 function renderRatios(containerId, rows, constants){
   const el=document.getElementById(containerId);
   const labels = rows.map(r=>`<th>${r.year}</th>`).join('');
@@ -672,7 +566,7 @@ function renderRatios(containerId, rows, constants){
   const netSeries    = rows.map(r=> r.revenue>0 ? r.net/r.revenue : 0);
   const fcfSeries    = rows.map(r=> r.revenue>0 ? (r.CFO - Math.abs(r.CFI))/r.revenue : 0);
   const debtSeries   = rows.map((r,i)=> { 
-    const totAssets=r.cash+r.AR+r.INV+r.PPE+(constants.staticAssets[0].val||0); 
+    const totAssets=r.cash+r.AR+r.INV+r.PPE; 
     return totAssets>0 ? (constants.DEBT||0)/totAssets : 0; 
   });
 
@@ -693,7 +587,7 @@ function renderCommonSize(containerId, rows, constants){
   const pct = (num,den)=> den>0 ? (num/den*100).toFixed(1)+'%' : 'N/A';
   const mk = (label, getter) => `<tr><td>${label}</td>${rows.map((r,i)=>`<td>${getter(r,i)}</td>`).join('')}</tr>`;
 
-  const totArr = rows.map(r=> r.cash + r.AR + r.INV + r.PPE + (constants.staticAssets[0].val||0));
+  const totArr = rows.map(r=> r.cash + r.AR + r.INV + r.PPE);
 
   // 損益表
   const PNL = `
@@ -702,7 +596,7 @@ function renderCommonSize(containerId, rows, constants){
       <tr><td>營業收入</td>${rows.map(_=>'<td>100.0%</td>').join('')}</tr>
       ${mk('營業成本',(r)=>pct(r.cogs,r.revenue))}
       ${mk('營業費用',(r)=>pct(r.opex,r.revenue))}
-      ${mk('EBITDA',(r)=>{const e=(r.revenue-r.cogs-r.opex+r.oi)+r.Dep;return pct(e,r.revenue)})}
+      ${mk('EBITDA',(r)=>{const e=(r.revenue-r.cogs-r.opex)+r.Dep;return pct(e,r.revenue)})}
       ${mk('本期淨利',(r)=>pct(r.net,r.revenue))}
     </table>`;
 
@@ -717,7 +611,6 @@ function renderCommonSize(containerId, rows, constants){
       ${mk('應付帳款',(r,i)=>pct(r.AP, totArr[i]))}
       ${mk('借款',(r,i)=>pct(constants.DEBT||0, totArr[i]))}
       ${mk('保留盈餘',(r,i)=>pct(r.RE, totArr[i]))}
-      ${mk('其他權益',(r,i)=>pct(constants.staticEquity[0].val||0, totArr[i]))}
     </table>`;
 
   el.innerHTML = `<div class="matrix-wrap">${PNL}${BS}</div>`;
@@ -751,12 +644,19 @@ async function exportForecastPDF(){
   /* ---------- 3) 固定 clone 寬度 = A4 內容寬（避免以螢幕寬輸出而放大/裁切） ---------- */
   const opt = {
     margin:       [10, 10, 12, 10], // 上右下左（mm）
-    filename:     (() => {
+    filename: (() => {
       const rows = window.lastForecast.rows || [];
       const firstYear = rows.length ? rows[0].year : '';
       const lastYear  = rows.length ? rows[rows.length - 1].year : '';
-      return (firstYear && lastYear) ? `財報分析_${firstYear}～${lastYear}.pdf` : '財報分析.pdf';
+
+      // ✅ 根據語言設定讀取翻譯字
+      const reportTitle = t('state.export.reportTitle');
+
+      return (firstYear && lastYear)
+        ? `${reportTitle}_${firstYear}～${lastYear}.pdf`
+        : `${reportTitle}.pdf`;
     })(),
+
     image:        { type: 'jpeg', quality: 0.98 },
     html2canvas:  { scale: 2, useCORS: true, background: '#FFFFFF', logging: false, scrollY: 0 },
     jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
@@ -883,39 +783,39 @@ function generateForecast(){
   wrap.innerHTML = `
     <div id="analysis_sections">
       <div class="draggable pdf-block" id="sec_revenue">
-        <h3>各年度營業收入（${firstYear} → ${lastYear}）</h3>
+        <h3>${t('state.analysis.revenueTitle')}（${firstYear} → ${lastYear}）</h3>
         <div class="chart-wrap"><canvas id="rev_chart_${years}"></canvas></div>
         <div id="kpi_${years}" style="margin-top:10px"></div>
       </div>
 
       <div class="draggable pdf-block" id="sec_summary">
-        <h3 style="margin-top:14px">重點彙整（多年度）</h3>
+        <h3 style="margin-top:14px">${t('state.analysis.summaryTitle')}</h3>
         <div id="matrix_${years}"></div>
       </div>
 
       <div class="draggable pdf-block" id="sec_cf">
-        <h3>現金流結構</h3>
+        <h3>${t('state.analysis.cfTitle')}</h3>
         <div class="chart-wrap"><canvas id="cf_stack_${years}"></canvas></div>
       </div>
 
       <div class="draggable pdf-block" id="sec_eff">
-        <h3 style="margin-top:14px">營運效率（CCC）</h3>
+        <h3 style="margin-top:14px">${t('state.analysis.cccTitle')}</h3>
         <div id="ccc_kpi_${years}"></div>
         <div class="chart-wrap"><canvas id="ccc_chart_${years}"></canvas></div>
       </div>
 
       <div class="draggable pdf-block" id="sec_ratios">
-        <h3 style="margin-top:14px">常用比率（核心指標）</h3>
+        <h3 style="margin-top:14px">${t('state.analysis.ratioTitle')}</h3>
         <div id="ratio_${years}"></div>
       </div>
 
       <div class="draggable pdf-block" id="sec_common">
-        <h3 style="margin-top:14px">共同比報表</h3>
+        <h3 style="margin-top:14px">${t('state.analysis.commonTitle')}</h3>
         <div id="common_${years}"></div>
       </div>
 
       <div class="draggable pdf-block" id="sec_bscheck">
-        <h3 style="margin-top:14px">資產負債平衡檢查</h3>
+        <h3 style="margin-top:14px">${t('state.analysis.bscheckTitle')}</h3>
         <div id="bscheck_${years}"></div>
       </div>
     </div>
@@ -948,14 +848,11 @@ function generateForecast(){
 
 // 依你的三表輸出邏輯計總額與差額
 function _bstot(r, constants){
-  const SA = constants.staticAssets[0].val || 0;
-  const SL = constants.staticLiabs[0].val  || 0;
-  const EQ = constants.staticEquity[0].val || 0;
   const DEBT = constants.DEBT || 0;
   const CAP  = constants.CAPITAL || 0;
-  const totalA  = r.cash + r.AR + r.INV + r.PPE + SA;
-  const totalLE = r.AP + DEBT + SL + CAP + r.RE + EQ;
-  return { totalA, totalLE, diff: totalA - totalLE, SA, SL, EQ, DEBT, CAP };
+  const totalA  = r.cash + r.AR + r.INV + r.PPE;
+  const totalLE = r.AP + DEBT + CAP + r.RE;
+  return { totalA, totalLE, diff: totalA - totalLE, DEBT, CAP };
 }
 
 // 渲染「平衡檢查」區塊（顯示差額與建議修正）
@@ -969,9 +866,9 @@ function renderBalanceCheck(containerId, rows, constants){
   // 逐年計算
   const calc = rows.map(r => {
     const t = _bstot(r, constants);
-    const RE_should = t.totalA - (r.AP + t.DEBT + t.SL + t.CAP + t.EQ); // 讓等式成立的 RE
+    const RE_should = t.totalA - (r.AP + t.DEBT + t.CAP); // 讓等式成立的 RE
     const cash_plug = -t.diff; // 若以「現金」作 plug，需調整的金額
-    return { year:r.year, ...t, RE_should, cash_plug };
+    return { year: r.year, ...t, RE_should, cash_plug };
   });
 
   // 最新年度摘要
@@ -1045,6 +942,166 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+
+/* ===== 新增會計科目 ===== */
+
+/* ---------- 自訂列加總  ---------- */
+function addCustomRow(section){
+  const map = {
+    assets: {tbody:'assets_body',  extraKey:'assets'},
+    liabs:  {tbody:'liabs_body',   extraKey:'liabs'},
+    equity: {tbody:'equity_body',  extraKey:'equity'},
+    pl:     {tbody:'pl_body',      extraKey:'pl'}
+  };
+  const cfg = map[section]; if(!cfg) return;
+  const tr = document.createElement('tr');
+  tr.setAttribute('data-extra', cfg.extraKey);
+  tr.innerHTML = `
+    <td class="left"><input type="text" class="name-input" placeholder="自訂科目" /></td>
+    ${section==='pl'
+      ? `<td><input type="number" class="onecol-val" value="0" step="1000"></td>`
+      : `<td><input type="number" class="beg" value="0" step="1000"></td>
+         <td><input type="number" class="end" value="0" step="1000"></td>`}
+    <td class="act"><button class="link" type="button" onclick="removeRow(this)">刪除</button></td>
+  `;
+  document.getElementById(cfg.tbody).appendChild(tr);
+  tr.addEventListener('input', computeAggregates);
+  bindThousandsFormat();
+  computeAggregates();
+}
+function removeRow(btn){ const tr = btn.closest('tr'); tr?.parentNode?.removeChild(tr); computeAggregates(); }
+function computeAggregates(){
+  const num = (el) => {
+    const raw = (el?.value || '').replace(/,/g,'');
+    const v = parseFloat(raw);
+    return isNaN(v) ? 0 : v;
+  };
+  const sumOf = (selector) => {
+    let s = 0;
+    document.querySelectorAll(selector).forEach(tr=>{
+      const end = tr.querySelector('input.end');
+      s += num(end);
+    });
+    return s;
+  };
+
+  document.getElementById('other_assets').value = String(sumOf('tr[data-extra="assets"]'));
+  document.getElementById('other_liabs').value  = String(sumOf('tr[data-extra="liabs"]'));
+  document.getElementById('other_equity').value = String(sumOf('tr[data-extra="equity"]'));
+}
+
+
+/* ---------- Modal（含防重複）---------- */
+function openModal(id){
+  const m=document.getElementById(id);
+  if(!m) return;
+  const section = m.getAttribute('data-section');
+  prepareModalSelections(m, section);
+  m.style.display='flex';
+}
+function closeModal(id){
+  const m=document.getElementById(id);
+  if(!m) return;
+  m.querySelectorAll('input[type=checkbox]:not(:disabled)').forEach(cb=>cb.checked=false);
+  m.style.display='none';
+}
+function prepareModalSelections(modalEl, section){
+  const tbodyIdMap = { assets:'assets_body', liabs:'liabs_body', equity:'equity_body', pl:'pl_body' };
+  const tbody = document.getElementById(tbodyIdMap[section]);
+  const existNames = new Set();
+  if (tbody) {
+    tbody.querySelectorAll('td.left').forEach(td=>{
+      const name = td.textContent.trim();
+      if (name) existNames.add(name);
+    });
+  }
+  modalEl.querySelectorAll('label.ck').forEach(label=>{
+    const cb = label.querySelector('input[type=checkbox]');
+    const hint = label.querySelector('.exists-hint');
+    const name = cb.value.trim();
+    if (existNames.has(name)) {
+      cb.checked = true; cb.disabled = true;
+      label.classList.add('ck-disabled'); if (hint) hint.hidden = false;
+      label.setAttribute('title','該科目已在清單中，不能重複新增');
+    } else {
+      cb.disabled = false; cb.checked  = false;
+      label.classList.remove('ck-disabled'); if (hint) hint.hidden = true;
+      label.removeAttribute('title');
+    }
+  });
+}
+window.addEventListener('click', (e)=>{
+  document.querySelectorAll('.modal').forEach(m=>{ if(e.target===m){ closeModal(m.id); } });
+});
+
+
+/* ---------- Modal（確認新增）---------- */
+function confirmAddFromModal(section){
+  const ids = {
+    assets: { modal:'assetModal',  tbody:'assets_body', extra:'assets' },
+    liabs:  { modal:'liabModal',   tbody:'liabs_body',  extra:'liabs'  },
+    equity: { modal:'equityModal', tbody:'equity_body', extra:'equity' },
+    pl:     { modal:'plModal',     tbody:'pl_body',     extra:'pl'     },
+  };
+  const cfg=ids[section]; if(!cfg) return;
+  const modal = document.getElementById(cfg.modal);
+  const checks = [...modal.querySelectorAll('input[type=checkbox]:checked:not(:disabled)')];
+
+  // 修正處：PL（損益）勾選項目改為直接插入輸入列 
+  if(section==='pl'){
+    let createdInfo=false;
+
+    // 在 PL 表尾新增一列（若已存在相同 id 就不重複新增）
+    const ensurePLRow = (id, label) => {
+      if (document.getElementById(id)) return; // 已存在就不再新增
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="left">${label}</td>
+        <td><input type="number" id="${id}" value="0" step="1000"></td>
+        <td class="act">
+          <button class="link" type="button" onclick="removeRow(this)">刪除</button>
+        </td>`;
+      document.getElementById('pl_body').appendChild(tr);
+      bindThousandsFormat(); 
+    };
+
+    checks.forEach(cb=>{
+      const v = cb.value.trim();
+      if(v.includes('折舊')) {
+        createdInfo = true; // 折舊依折舊率自動計算，不需輸入列
+      } else if (v.includes('利息')) {
+        ensurePLRow('interest_expense','利息費用');
+      } else { // 其他收益/費損
+        ensurePLRow('other_income','其他收益/費損');
+      }
+      cb.checked=false;
+    });
+
+    closeModal(cfg.modal);
+    if(createdInfo){ alert('「折舊費用」將依「折舊率（Dep / 期初 PPE）」自動計算，無需輸入。'); }
+    return;
+  }
+  // 修正處結束 
+
+  const tbody=document.getElementById(cfg.tbody);
+  checks.forEach(cb=>{
+    const tr=document.createElement('tr');
+    tr.setAttribute('data-extra', cfg.extra);
+    tr.innerHTML=`
+      <td class="left">${cb.value}</td>
+      <td><input type="number" class="beg" value="0" step="1000"></td>
+      <td><input type="number" class="end" value="0" step="1000"></td>
+      <td class="act"><button class="link" type="button" onclick="removeRow(this)">刪除</button></td>`;
+    tbody.appendChild(tr);
+    tr.addEventListener('input', computeAggregates);
+    bindThousandsFormat();
+    cb.checked=false;
+  });
+  computeAggregates();
+  closeModal(cfg.modal);
+}
+
+
 window.exportForecastPDF = exportForecastPDF
 window.generateForecast = generateForecast
 window.openModal = openModal;
@@ -1052,3 +1109,4 @@ window.closeModal = closeModal;
 window.confirmAddFromModal = confirmAddFromModal;
 window.addCustomRow = addCustomRow;
 window.removeRow = removeRow;
+

@@ -8,7 +8,7 @@
   <!-- 圖表套件（沿用原本 Chart.js） -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="state.css" />
+  <link rel="stylesheet" href="1107.css" />
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 
@@ -50,11 +50,15 @@
   <!-- ② 資產（Assets） -->
   <h2>
     <span data-i18n="state.section2">② 資產 (Assets)</span>
+
+    <!--
     <button class="mini-btn" type="button"
             data-i18n="state.addAsset"
             onclick="openModal('assetModal')">
       ＋新增資產科目
     </button>
+    -->
+
   </h2>
 
   <div class="card">
@@ -70,26 +74,26 @@
       <tbody id="assets_body">
         <tr>
           <td class="left" data-i18n="state.asset.cash">現金及約當現金</td>
-          <td><input type="number" id="cash_begin" value="0" step="1000"></td>
-          <td><input type="number" id="cash_end" value="0" step="1000"></td>
+          <td><input type="number" id="cash_begin" value="800" step="1000" required></td>
+          <td><input type="number" id="cash_end" value="640" step="1000" required></td>
           <td></td>
         </tr>
         <tr>
           <td class="left" data-i18n="state.asset.receivable">應收帳款</td>
-          <td><input type="number" id="ar_begin" value="0" step="1000"></td>
-          <td><input type="number" id="ar_end" value="0" step="1000"></td>
+          <td><input type="number" id="ar_begin" value="1500" step="1000" required></td>
+          <td><input type="number" id="ar_end" value="1200" step="1000" required></td>
           <td></td>
         </tr>
         <tr>
           <td class="left" data-i18n="state.asset.inventory">存貨</td>
-          <td><input type="number" id="inventory_begin" value="0" step="1000"></td>
-          <td><input type="number" id="inventory_end" value="0" step="1000"></td>
+          <td><input type="number" id="inventory_begin" value="2000" step="1000" required></td>
+          <td><input type="number" id="inventory_end" value="1900" step="1000" required></td>
           <td></td>
         </tr>
         <tr>
-          <td class="left" data-i18n="state.asset.ppe">不動產、廠房及設備（PPE）</td>
-          <td><input type="number" id="ppe_begin" value="0" step="1000"></td>
-          <td><input type="number" id="ppe_end" value="0" step="1000"></td>
+          <td class="left" data-i18n="state.asset.ppe">不動產、廠房及設備</td>
+          <td><input type="number" id="ppe_begin" value="9000" step="1000" required></td>
+          <td><input type="number" id="ppe_end" value="9700" step="1000" required></td>
           <td></td>
         </tr>
         <!-- 透過 Modal 新增的資產列 -->
@@ -100,11 +104,15 @@
   <!-- ③ 負債（Liabilities） -->
   <h2>
     <span data-i18n="state.section3">③ 負債 (Liabilities)</span>
+
+    <!--
     <button class="mini-btn" type="button"
             data-i18n="state.addLiab"
             onclick="openModal('liabModal')">
       ＋新增負債科目
     </button>
+    -->
+
   </h2>
 
   <div class="card">
@@ -120,14 +128,14 @@
       <tbody id="liabs_body">
         <tr>
           <td class="left" data-i18n="state.liability.payable">應付帳款</td>
-          <td><input type="number" id="ap_begin" value="0" step="1000"></td>
-          <td><input type="number" id="ap_end" value="0" step="1000"></td>
+          <td><input type="number" id="ap_begin" value="1800" step="1000" required></td>
+          <td><input type="number" id="ap_end" value="1700" step="1000" required></td>
           <td></td>
         </tr>
         <tr>
           <td class="left" data-i18n="state.liability.loan">借款（含長短期）</td>
-          <td><input type="number" id="debt_begin" value="0" step="1000"></td>
-          <td><input type="number" id="debt_end" value="0" step="1000"></td>
+          <td><input type="number" id="debt_begin" value="4000" step="1000" required></td>
+          <td><input type="number" id="debt_end" value="3500" step="1000" required></td>
           <td></td>
         </tr>
         <!-- 透過 Modal 新增的負債列 -->
@@ -138,11 +146,15 @@
   <!-- ④ 權益（Equity） -->
   <h2>
     <span data-i18n="state.section4">④ 權益 (Equity)</span>
+
+    <!--
     <button class="mini-btn" type="button"
             data-i18n="state.addEquity"
             onclick="openModal('equityModal')">
       ＋新增權益科目
     </button>
+    -->
+
   </h2>
 
   <div class="card">
@@ -158,13 +170,13 @@
       <tbody id="equity_body">
         <tr>
           <td class="left" data-i18n="state.equity.capital">股本</td>
-          <td><input type="number" id="capital_begin" value="0" step="1000"></td>
-          <td><input type="number" id="capital_end" value="0" step="1000"></td>
+          <td><input type="number" id="capital_begin" value="5000" step="1000" required></td>
+          <td><input type="number" id="capital_end" value="3500" step="1000" required></td>
           <td></td>
         </tr>
         <tr>
           <td class="left" data-i18n="state.equity.retainedEarnings">期初保留盈餘（RE）</td>
-          <td><input type="number" id="re_begin" value="0" step="1000"></td>
+          <td><input type="number" id="re_begin" value="2500" step="1000" required></td>
           <td></td>
           <td class="act"></td>
         </tr>
@@ -177,11 +189,14 @@
   <!-- ⑤ 期間損益科目 -->
   <h2>
     <span data-i18n="state.section5">⑤ 期間損益科目 (Income & Expenses)</span>
+
+    <!--
     <button class="mini-btn" type="button"
             data-i18n="state.addPL"
             onclick="openModal('plModal')">
       ＋新增損益科目
     </button>
+    -->
   </h2>
 
   <div class="card">
@@ -196,22 +211,28 @@
       <tbody id="pl_body">
         <tr>
           <td class="left" data-i18n="state.pl.revenue">營業收入</td>
-          <td><input type="number" id="revenue" value="0" step="1000"></td>
+          <td><input type="number" id="revenue" value="15000" step="1000" required></td>
           <td></td>
         </tr>
         <tr>
           <td class="left" data-i18n="state.pl.cogs">營業成本</td>
-          <td><input type="number" id="cogs" value="0" step="1000"></td>
+          <td><input type="number" id="cogs" value="9000" step="1000" required></td>
           <td></td>
         </tr>
         <tr>
           <td class="left" data-i18n="state.pl.expense">營業費用</td>
-          <td><input type="number" id="op_expense" value="0" step="1000"></td>
+          <td><input type="number" id="op_expense" value="3000" step="1000" required></td>
+          <td></td>
+        </tr>
+        <!-- 新增利息費用!!!!! -->
+        <tr>
+          <td class="left" data-i18n="state.modal.pl.interest">利息費用</td>
+          <td><input type="number" id="interest_expense" value="400" step="1000" required></td>
           <td></td>
         </tr>
         <tr>
           <td class="left" data-i18n="state.pl.tax">所得稅費用</td>
-          <td><input type="number" id="tax_expense" value="0" step="1000"></td>
+          <td><input type="number" id="tax_expense" value="360" step="1000" required></td>
           <td></td>
         </tr>
       </tbody>
@@ -250,7 +271,7 @@
           <input type="number" id="ass_tax_rate" value="20" step="0.1">
         </div>
         <div>
-          <label data-i18n="state.paramDepRate">折舊率（Dep / 期初PPE, %）</label>
+          <label data-i18n="state.paramDepRate">折舊率（%）</label>
           <input type="number" id="ass_dep_rate" value="10" step="0.1">
         </div>
         <div>
@@ -270,15 +291,16 @@
           <input type="number" id="ass_ap_pct" value="8" step="0.1">
         </div>
         <div>
-          <label data-i18n="state.paramInterestRate">借款利率（%）</label>
-          <input type="number" id="ass_interest_rate" value="3" step="0.1">
-        </div>
-    </div>
+        <label data-i18n="state.paramInterestRate">借款利率（%）</label>
+        <input type="number" id="ass_interest_rate" value="3" step="0.1">
+      </div>
+      </div>
+      
 
-    <div style="margin-top:12px">
-      <button class="btn" onclick="generateForecast()">生成預測財報</button>
-      <button class="btn ghost" onclick="exportForecastPDF()">匯出預測（PDF）</button>
-    </div>
+      <div style="margin-top:12px">
+        <button class="btn" onclick="generateForecast()">生成預測財報</button>
+        <button class="btn ghost" onclick="exportForecastPDF()">匯出預測（PDF）</button>
+      </div>
 
   </div>
 
@@ -292,10 +314,10 @@
       <label>
         <span data-i18n="state.numFormat.decimalLabel">小數位數</span>
         <select id="decimal_places">
-          <option value="0" data-i18n="state.numFormat.decimal0">0 位</option>
+          <option value="0" data-i18n="state.numFormat.decimal0" selected>0 位</option>
           <option value="1" data-i18n="state.numFormat.decimal1">1 位</option>
           <option value="2" data-i18n="state.numFormat.decimal2">2 位</option>
-          <option value="3" data-i18n="state.numFormat.decimal3" selected>3 位</option>
+          <option value="3" data-i18n="state.numFormat.decimal3">3 位</option>
         </select>
       </label>
 
@@ -314,6 +336,8 @@
 </div>
 
 <!-- 四個 Modal（內容維持中文） -->
+
+<!--
 <div id="assetModal" class="modal" data-section="assets">
   <div class="modal-card">
     <div class="modal-title" data-i18n="state.modal.asset.title">新增 Asset 科目</div>
@@ -344,8 +368,9 @@
     <button class="modal-x" onclick="closeModal('assetModal')">×</button>
   </div>
 </div>
+ -->
 
-
+<!--
 <div id="liabModal" class="modal" data-section="liabs">
   <div class="modal-card">
     <div class="modal-title" data-i18n="state.modal.liab.title">新增 Liability 科目</div>
@@ -376,8 +401,9 @@
     <button class="modal-x" onclick="closeModal('liabModal')">×</button>
   </div>
 </div>
+-->
 
-
+<!--
 <div id="equityModal" class="modal" data-section="equity">
   <div class="modal-card">
     <div class="modal-title" data-i18n="state.modal.equity.title">新增 Equity 科目</div>
@@ -408,8 +434,9 @@
     <button class="modal-x" onclick="closeModal('equityModal')">×</button>
   </div>
 </div>
+-->
 
-
+<!--
 <div id="plModal" class="modal" data-section="pl">
   <div class="modal-card">
     <div class="modal-title" data-i18n="state.modal.pl.title">新增 Expense 科目</div>
@@ -440,10 +467,11 @@
     <button class="modal-x" onclick="closeModal('plModal')">×</button>
   </div>
 </div>
+-->
 
 <chat-icon></chat-icon>
 
-<script type="module" src="1020.js"></script>
+<script type="module" src="1109.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script type="module" src="src/components/chat-icon/chat-icon.js"></script>
 <script defer src="./language/js/include-header.js"></script>

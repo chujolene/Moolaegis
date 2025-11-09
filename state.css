@@ -321,5 +321,20 @@ h3:active::before {
   font-size: 14px;
 }
 
+.total-row td:first-child {
+  color: #0a67c0;
+}
+
+/* 讓損益表的左欄（科目名稱）靠左對齊 */
+.ie-table td:first-child {
+  text-align: left !important;
+  padding-left: 12px; /* 可依需要微調縮排 */
+}
+
+/* 讓金額欄保持靠右對齊 */
+.ie-table td:last-child {
+  text-align: right !important;
+  padding-right: 12px;
+}
 
 

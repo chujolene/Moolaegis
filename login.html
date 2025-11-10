@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title data-i18n="page.registerTitle">Sign Up • Moolaegis</title>
+  <title data-i18n="page.loginTitle">Login • Moolaegis</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="CSS01/Register.css" />
+  <link rel="stylesheet" href="CSS01/Login.css" />
   <link rel="icon" href="data:," />
   <!-- <script>window.LANG_BASE = '../language';</script> -->
 
-  <!-- 讓語言選單可相對 .wrapper 定位，且不被裁切 -->
+  <!-- 讓語言選單能相對 .wrapper 定位，且不被裁切 -->
   <style>
     .i18n-header__select{
     padding:.25rem .5rem; 
@@ -29,7 +29,7 @@
     .i18n-header{
     position: absolute;
     right: 0;
-    bottom: calc(100% + 8px);  /* 🔑 距離 wrapper 上緣 8px，可自行調整 */
+    bottom: calc(100% + 8px);  
     z-index: 10;
 
     display: flex;
@@ -47,41 +47,35 @@
   }
   </style>
 </head>
-
 <body>
   <div class="wrapper">
-
-    <form id="regForm" novalidate>
-      <h1 data-i18n="auth.signup">Sign Up</h1>
-
-      <div class="input-box">
-        <input type="email" name="email" id="email"
-               placeholder="Email"
-               data-i18n-placeholder="form.email" autocomplete="email">
-        <i class="bx bx-envelope" aria-hidden="true"></i>
-      </div>
+    <form id="loginForm" novalidate>
+      <h1 data-i18n="auth.login">Login</h1>
 
       <div class="input-box">
-        <input type="text" name="username" id="username"
+        <input type="text" name="username"
                placeholder="Username"
                data-i18n-placeholder="form.username" autocomplete="username">
         <i class="bx bx-user" aria-hidden="true"></i>
       </div>
 
       <div class="input-box">
-        <input type="password" name="password" id="password"
+        <input type="password" name="password"
                placeholder="Password"
-               data-i18n-placeholder="form.password" autocomplete="new-password">
+               data-i18n-placeholder="form.password" autocomplete="current-password">
         <i class="bx bx-lock" aria-hidden="true"></i>
       </div>
 
-      <button type="submit" class="btn" data-i18n="auth.signup">Sign Up</button>
+      <div class="forgot-password">
+        <a href="Forget.html" data-i18n="auth.forgot">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn" data-i18n="auth.login">Login</button>
 
       <div class="register-link">
         <p>
-          <span data-i18n="auth.haveAccount">I have an account!</span>
-          <!-- 注意大小寫：Windows 不敏感，但 Linux 伺服器會區分 -->
-          <a href="login.html" data-i18n="auth.login">Login</a>
+          <span data-i18n="auth.noAccount">No account?</span>
+          <a href="Register.html" data-i18n="auth.signup">Sign Up</a>
         </p>
       </div>
     </form>
@@ -101,7 +95,7 @@
   </footer>
 
   <!-- JS：純相對路徑版 -->
-  <script type="module" src="JS01/Register.js?v=20250731-2"></script>
+  <script type="module" src="JS01/Login.js"></script>
   <script defer src="./language/js/include-header.js"></script>
   <script defer src="./language/js/i18n.js"></script>
 </body>

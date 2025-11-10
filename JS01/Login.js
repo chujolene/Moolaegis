@@ -60,7 +60,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
       // 成功：「成功 / 登入成功」
       showModalKey('modal.successTitle', 'auth.loginSuccess', () => {
-        window.location.href = 'Home.html';
+        window.location.href = 'home.html';
       });
     } else {
       // 失敗：若能辨識具體錯誤（如 Incorrect Password），顯示對應翻譯；否則顯示通用「登入失敗」

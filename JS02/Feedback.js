@@ -2,6 +2,12 @@ import { API_BASE_URL } from "../config.js";
 
 const FEEDBACK_ENDPOINT = `${API_BASE_URL}/feedback/`;
 
+if (!localStorage.getItem('access_token')) {
+    window.location.href = 'login.html';
+  }
+
+
+
 // ===== Modal =====
 const modalLayer = document.getElementById("modalLayer");
 const modalTitle = document.getElementById("modalTitle");

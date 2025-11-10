@@ -13,11 +13,6 @@ if (!localStorage.getItem('access_token')) {
   }
 else {
     const token = localStorage.getItem('access_token');
-    if (token) {
-        const decoded = parseJwt(token);
-        document.getElementById('welcomeUsername').textContent = decoded.sub || 'User';
-        } else {
-        window.location.href = 'Main.html'; // Redirect if not logged in
-    }
-
-}
+    const decoded = parseJwt(token);
+    document.getElementById('welcomeUsername').textContent = decoded.sub || 'User';
+  }

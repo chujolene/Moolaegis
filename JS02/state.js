@@ -1,5 +1,9 @@
 import { API_BASE_URL } from "../config.js";
 
+if (!localStorage.getItem('access_token')) {
+    window.location.href = 'login.html';
+  }
+
 /* =========================================
  *  i18n：偵測 & 管理語言
  *  優先順序：

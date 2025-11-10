@@ -1,5 +1,11 @@
 import { API_BASE_URL } from "../config.js";
 
+
+if (!localStorage.getItem('access_token')) {
+    window.location.href = 'login.html';
+  }
+
+  
 /* =========================
    i18n helper
    ========================= */

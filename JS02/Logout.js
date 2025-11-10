@@ -7,5 +7,5 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   // localStorage.clear();
 
   // Redirect to login page
-  window.location.href = "Main.html";
+  window.location.href = "index.html";
 });

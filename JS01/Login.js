@@ -73,3 +73,4 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     showModalKey('modal.errorTitle', 'net.cannotConnect');
   }
 });
+

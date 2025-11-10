@@ -79,7 +79,7 @@
             <p class="card-description" data-i18n="home.hr.desc">
               Retrieve and conduct a thorough review of all your previously generated financial statements.
             </p>
-            <button class="btn btn-primary" onclick="location.href='history.html'" data-i18n="home.hr.cta">
+            <button class="btn btn-primary" onclick="location.href='History.html'" data-i18n="home.hr.cta">
               View History
             </button>
           </div>
@@ -95,14 +95,18 @@
     <!-- Footer Controls -->
     <div class="footer-controls">
       <button class="btn btn-settings"  data-i18n="nav.feedback" onclick="location.href='feedback.html'">意見回饋</button>
-      <button class="btn btn-logout" id="logoutBtn" data-i18n="home.logout" onclick="location.href='index.html'">Logout</button>
+      <button class="btn btn-logout" id="logoutBtn" data-i18n="home.logout" onclick="location.href='Main.html'">Logout</button>
     </div>
     <chat-icon></chat-icon>
   </main>
 
+  <footer class="footer-copyright">
+    © <span id="copyright-year"></span> Moolaegis. All rights reserved.
+  </footer>
+
   <!-- JS（如你把 Home.js 搬到 JS01/，請改 src="JS01/Home.js?v=..."） -->
-  <script type="module" src="Home.js?v=20250731"></script>
-  <script src="logout.js?v=20250731"></script>
+  <script type="module" src="JS02/Home.js?v=20250731"></script>
+  <script src="JS02/Logout.js?v=20250731"></script>
 
   <!-- i18n 腳本：若本頁在子資料夾，改成 ../language/... 或在 head 設定 window.LANG_BASE='../language' -->
   <script defer src="./language/js/include-header.js?v=20250731"></script>

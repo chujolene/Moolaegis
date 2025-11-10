@@ -1,0 +1,388 @@
+:root {
+  --brand:#0a67c0;
+  --bg:#f7f9fc;
+  --panel:#ffffff;
+  --line:#e6eef8;
+  --muted:#6b7280;
+}
+html, body {
+  height: auto;
+  overflow-x: hidden; /* 防止水平滾動 */
+  overflow-y: auto;   /* ✅ 開啟垂直滾動 */
+}
+
+*{box-sizing:border-box}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 40px;
+  z-index: 1000;
+
+  /* === 👇 新增模糊與透明效果 === */
+
+  backdrop-filter: blur(12px);            /* ✅ 核心：背景模糊 */
+  -webkit-backdrop-filter: blur(12px);    /* Safari 支援 */
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.header-right {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #000;                 /* Navbar 連結 = 黑色 */
+  font-weight: 600;
+  margin-left: 24px;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #f5f5f5;
+}
+body {
+  margin: 0;
+  padding: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-image: url('./img1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  /* ✅ 關鍵修改 */
+  min-height: 100vh;      /* 保持背景滿版，但允許超出畫面時滾動 */
+  overflow-x: hidden;     /* 防止水平捲動 */
+  overflow-y: auto;       /* ✅ 開啟垂直滾動 */
+}
+
+/* === 讓主要內容不會被 header 壓住 === */
+.container {
+  margin-top: 10px;        /* 必須比 .header 高度略大一點 */
+  max-width: 1200px;       /* 原本若為 800，可放大為 1200 */
+  width: 90%;              /* 讓內容自適應視窗寬度 */
+  margin-left: auto;
+  margin-right: auto;
+  background: white;
+  padding: 20px 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+/* === 頁首標題（對齊白色框） === */
+.front {
+  max-width: 1200px;
+  width: 90%;
+  margin: 70px auto 10px auto;  /* ✅ 改這行，縮小與 navbar 間距 */
+  text-align: left;
+}
+
+.front h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #111;
+}
+
+.front .muted {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+h1{font-size:1.6rem;margin:0 0 8px}
+h2{font-size:1.2rem;border-left:4px solid var(--brand);padding-left:10px;margin:20px 0 10px;display:flex;align-items:center;gap:8px}
+h3{font-size:1.05rem;margin:14px 0 8px;color:#0b4b8a}
+.muted{color:var(--muted);font-size:.9rem}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+
+.row-2col{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media (max-width: 900px){.row-2col{grid-template-columns:1fr}}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width: 960px){.grid4{grid-template-columns:1fr}}
+
+label{display:block;font-size:.9rem;color:#374151;margin-bottom:6px}
+input[type="number"],input[type="date"],input[type="text"]{
+  width:100%;padding:8px 10px;border:1px solid #d6e3f3;border-radius:8px;background:#fbfdff
+}
+
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);border:none;color:#fff;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}
+.btn.ghost{background:#fff;color:#0b4b8a;border:1px solid #b9d7ff}
+.mini-btn{margin-left:6px;font-size:.82rem;padding:6px 10px;border-radius:8px;border:1px solid #b9d7ff;background:#fff;color:#0b4b8a;cursor:pointer}
+.link{background:transparent;border:none;color:#0a67c0;cursor:pointer;text-decoration:underline}
+
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width: 960px){.kpi{grid-template-columns:1fr 1fr}}
+.kpi .card{border-radius:12px;border:1px solid #e7eef8;background:#f9fcff}
+.kpi .title{font-size:.9rem;color:#334155}
+.kpi .value{font-weight:800;font-size:1.4rem}
+.kpi .sub{color:#6b7280;font-size:.82rem}
+
+table{width:100%;border-collapse:collapse}
+.ie-table thead th{background:#f6faff;border-bottom:1px solid #e3eefb;color:#334155}
+.ie-table th,.ie-table td{padding:8px 10px;border-bottom:1px dashed #e8eef7;text-align:right}
+.ie-table .left{text-align:left}
+.ie-table .act{width:72px;text-align:center}
+.ie-table.onecol td:nth-child(2), .ie-table.onecol th:nth-child(2){width:280px}
+.matrix-wrap{overflow:auto;border:1px solid #e7eef8;border-radius:12px}
+.matrix th,.matrix td{padding:8px 10px;border-bottom:1px dashed #e8eef7;text-align:right}
+.matrix th:first-child,.matrix td:first-child{text-align:left;color:#334155}
+.total-row td{font-weight:700;border-bottom:2px solid #dbe8fb}
+
+.chart-wrap{margin-top:10px;border:1px solid #e7eef8;background:#fff;border-radius:12px;padding:10px; margin-bottom:10px}
+details{border:1px solid #e7eef8;border-radius:12px;margin:12px 0;background:#fcfdff}
+summary{cursor:pointer;padding:10px 12px;font-weight:700;color:#0b4b8a}
+
+.year-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 14px 14px}
+@media (max-width: 1200px){.year-grid{grid-template-columns:1fr}}
+
+.soft{border:0;border-top:1px dashed #e7eef8;margin:12px 0}
+
+/* ===== Modal ===== */
+.modal{
+  position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.45);z-index:9999;padding:16px;
+}
+.modal-card{
+  width:520px;max-width:100%;background:#fff;border-radius:14px;border:1px solid var(--line);
+  box-shadow:0 10px 30px rgba(0,0,0,.15);padding:18px 18px 58px;position:relative;
+}
+.modal-title{font-size:1.2rem;color:#0b4b8a;font-weight:800;margin-bottom:10px;border-left:4px solid var(--brand);padding-left:8px}
+.ck{display:flex;align-items:center;gap:10px;margin:10px 0;color:#374151}
+.ck-disabled{opacity:.6}
+.exists-hint{color:#6b7280;font-size:.85em;margin-left:4px}
+.modal-actions{position:absolute;right:18px;bottom:14px;display:flex;gap:8px}
+.modal-x{
+  position:absolute;right:10px;top:8px;background:#fff;border:1px solid #d9e6fb;border-radius:8px;
+  padding:2px 8px;cursor:pointer;color:#0b4b8a;font-weight:700
+}
+
+/* 讓 select 外觀與 input 完全一致（前次已加入，保留） */
+select{
+  width:100%;
+  padding:8px 36px 8px 10px;
+  border:1px solid #d6e3f3;
+  border-radius:8px;
+  background:#fbfdff;
+  color:#111;
+  font:inherit;
+  line-height:1.4;
+  appearance:none; -webkit-appearance:none; -moz-appearance:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a67c0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat:no-repeat;
+  background-position:right 10px center;
+  background-size:16px;
+}
+select:hover{ border-color:#b9d7ff; }
+select:focus{ outline:none; border-color:#93c5fd; box-shadow:0 0 0 3px rgba(10,103,192,.12); }
+select::-ms-expand{ display:none; }
+h3{
+  padding-left: 3px;
+  font-size: 22px;
+}
+h4{
+    padding-left: 8px;
+}
+@media print {
+  .chart-wrap, .card, table { break-inside: avoid; page-break-inside: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+/* ============= 只在 PDF 版面生效的全域縮小 ============= */
+.pdf-root { font-size: 12px; }  /* 基準字再縮一級 */
+
+/* ① KPI 字體過大 → 針對 KPI 卡縮小層級 */
+.pdf-root .kpi .title { font-size: 11.5px; }
+.pdf-root .kpi .value { font-size: 19px; line-height: 1.15; }
+.pdf-root .kpi .sub   { font-size: 10.5px; opacity: .75; }
+
+/* ② 某些標題（例如資產負債表類）太貼頁緣 → 讓每個章節塊頂部多一點內距 */
+.pdf-root .pdf-block { padding-top: 4mm; break-inside: avoid; page-break-inside: avoid; }
+/* 第一個章節不加距離，避免白邊太寬 */
+.pdf-root .pdf-block:first-child { padding-top: 0; }
+
+/* ③ 基期年度三表排版怪（卡片被分頁或擠位移）→ 固定三欄格局、避免拆頁 */
+.pdf-root .year-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+  align-items: start;
+  break-inside: avoid; page-break-inside: avoid;
+}
+.pdf-root .year-grid .card { break-inside: avoid; page-break-inside: avoid; }
+.pdf-root details { break-inside: avoid; page-break-inside: avoid; }
+
+/* ④ 預測報表（例如「損益表（2028）」等）標題太大 → 全域 h3 降級、三表內標題再小一階 */
+.pdf-root h3 { font-size: 16px; margin: 0 0 6px; line-height: 1.25; page-break-after: avoid; }
+.pdf-root .year-grid h3 { font-size: 15px; margin-bottom: 6px; }
+
+/* 表格在 PDF 內縮一級間距（避免撐頁），也讓行高更緊湊一點 */
+.pdf-root .matrix th,
+.pdf-root .matrix td { padding: 6px 8px; font-size: 12px; line-height: 1.3; }
+
+/* 讓顏色接近螢幕（非必要，但 PDF 會更美觀） */
+* { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+/* 一個章節內的「小標題 + 表格」合綁：不要被拆頁 */
+.pdf-root .matrix-section{
+  break-inside: avoid;
+  page-break-inside: avoid;
+  padding-top: 2mm;                /* 讓標題離頁頂有點距離，避免貼邊 */
+  margin-bottom: 10px;
+}
+
+/* 小標題本身也避免在後面產生分頁 */
+.pdf-root .matrix-section .subttl{
+  page-break-after: avoid;
+  margin: 0 0 4px;
+  font-weight: 600;
+}
+
+/* 小標題與表格之間不要再有多餘間距（避免「斷在 margin 上」） */
+.pdf-root .matrix-section .matrix{
+  margin-top: 0;
+}
+
+/* === 可拖曳區塊（基礎樣式） === */
+.draggable {
+  cursor: grab;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.draggable:active {
+  cursor: grabbing;
+}
+/* 每個可拖拉區塊的標題前加上拖拉圖示 */
+/* 每個可拖拉區塊的標題前加上拖拉圖示（純 CSS，不用字元） */
+.draggable > h3::before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 14px;
+  margin-right: 6px;
+  vertical-align: middle;
+  cursor: move;
+  /* 六個小點點的拖拉手把 */
+  background-image:
+    radial-gradient(#999 1px, transparent 1px),
+    radial-gradient(#999 1px, transparent 1px),
+    radial-gradient(#999 1px, transparent 1px),
+    radial-gradient(#999 1px, transparent 1px),
+    radial-gradient(#999 1px, transparent 1px),
+    radial-gradient(#999 1px, transparent 1px);
+  background-position:
+    0 0,      6px 0,
+    0 6px,    6px 6px,
+    0 12px,   6px 12px;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+
+
+/* === 拖曳中的狀態 === */
+.sortable-chosen {
+  opacity: 1;  /* 被拖動的區塊保持完整顯示 */
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+}
+.sortable-ghost {
+  opacity: 0.3;               /* 原位置留一個半透明影子 */
+  background: inherit;
+  border: 1px solid #93c5fd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.18);
+}
+
+/* === 標題作為拖曳手把（改為僅在 .draggable 中顯示） === */
+
+/* 預設：隱藏所有 h3 的手把（這會影響年度三表內的 h3 與 #number_format_settings h3） */
+h3::before {
+  content: none;
+  display: none;
+}
+
+/* 只有在 .draggable 裡的 h3 顯示拖曳手把並設定游標（讓使用者知道可拖曳） */
+.draggable h3 {
+  cursor: grab;
+}
+.draggable h3:active {
+  cursor: grabbing;
+}
+.draggable h3::before {
+  content: "⋮⋮"; /* 拖曳手把字元 */
+  font-size: 16px;
+  color: #888;
+  margin-right: 6px;
+  cursor: grab;
+  display: inline-block;
+}
+
+/* 若 hover 或 active 時強化顏色（可選） */
+.draggable h3:hover::before {
+  color: #666;
+}
+.draggable h3:active::before {
+  color: #0a67c0;
+}
+
+/* === 滑鼠 hover 提示 === */
+.draggable:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  border: 1px solid #93c5fd;
+  background: #f0f8ff;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+#number_format_settings {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 15px;
+}
+
+#number_format_settings h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+#number_format_settings select {
+  padding: 4px 8px;
+  font-size: 14px;
+}
+
+.total-row td:first-child {
+  color: #0a67c0;
+}
+
+/* 讓損益表的左欄（科目名稱）靠左對齊 */
+.ie-table td:first-child {
+  text-align: left !important;
+  padding-left: 12px; /* 可依需要微調縮排 */
+}
+
+/* 讓金額欄保持靠右對齊 */
+.ie-table td:last-child {
+  text-align: right !important;
+  padding-right: 12px;
+}
+
+.footer-copyright {
+  position: fixed;
+  bottom: 10px;
+  left: 20px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: "Inter", "Noto Sans TC", sans-serif;
+  z-index: 1000;
+  user-select: none;
+}

@@ -2,39 +2,32 @@
   "page": {
     "title": "Moolaegis",
     "loginTitle": "Login • Moolaegis",
-    "registerTitle": "Sign Up • Moolaegis",
+    "registerTitle": "Register • Moolaegis",
     "forgetTitle": "Reset Password • Moolaegis",
     "homeTitle": "Home • Moolaegis",
-    "chatTitle": "Chat • Moolaegis"
+    "chatTitle": "Generate Report • Moolaegis"
   },
-   "nav": {
+  "nav": {
     "home": "Home",
-    "state": "Forecast Report",
+    "state": "Forecast Reports",
     "history": "History",
-    "settings": "Settings",
     "feedback": "Feedback"
   },
-  "ui": { 
+  "ui": {
     "back": "Back",
     "close": "Close"
   },
   "home": {
     "welcome": "Welcome to",
-    "signup": "Sign Up",
+    "signup": "Register",
     "login": "Login",
-    "welcomeBackPrefix": "Welcome back, ",
+    "welcomeBackPrefix": "Welcome back,",
     "settings": "Settings",
     "logout": "Logout",
-
-     "fs": {
+    "fs": {
       "title": "Financial Statements",
       "desc": "Simply input key indicators to quickly generate financial forecast reports.",
-      "cta": "Start Generating"
-    },
-    "sa": {
-      "title": "Sensitivity Analysis",
-      "desc": "Slide different key drivers from –50% to +50% and see real-time impacts on each line item.",
-      "cta": "Start Analysis"
+      "cta": "Generate Report"
     },
     "hr": {
       "title": "Historical Reports",
@@ -42,206 +35,242 @@
       "cta": "View History"
     }
   },
-  "form": { 
+  "form": {
     "email": "Email",
-    "username": "Username", 
+    "username": "Username",
     "password": "Password",
-    "newPassword": "New Password",
-    "fillAllFields": "Fill all fields",
-    "fillAllFieldsOrMin": "Fill all fields and use a password \u2265 {n} chars",
-    "invalidEmail": "Invalid email address",
-    "passwordMin": "Password must be at least {n} characters."
+    "newPassword": "New password",
+    "fillAllFields": "Please fill in all fields",
+    "fillAllFieldsOrMin": "Please fill in all fields and password length ≥ 6",
+    "invalidEmail": "Invalid email format",
+    "passwordMin": "Password must be at least {n} characters"
   },
   "auth": {
     "login": "Login",
     "forgot": "Forgot password?",
-    "signup": "Sign Up",
+    "signup": "Sign up",
     "noAccount": "No account?",
     "haveAccount": "I have an account!",
     "reset": "Reset",
-    "resetTitle": "Reset password",
-    "loginSuccess": "Login successful",
+    "resetTitle": "Reset Password",
+    "loginSuccess": "Login succeeded",
     "loginFailed": "Login failed",
     "incorrectPassword": "Incorrect password",
     "userNotFound": "User not found",
-    "registerSuccess": "Registration successful",
-    "registerFailed": "Registration failed.",
-    "emailTaken": "Email is already in use",
-    "usernameTaken": "Username is already in use"
+    "registerSuccess": "Register success",
+    "registerFailed": "Register failed",
+    "emailTaken": "Email already used",
+    "usernameTaken": "Username already used",
+    "passwordResetSuccess": "Password reset success",
+    "passwordResetFailed": "Password reset failed"
   },
   "modal": {
     "title": "Notice",
     "ok": "OK",
-    "defaultMsg": "Please review your input.",
+    "defaultMsg": "Please check your input.",
     "successTitle": "Success",
     "errorTitle": "Error",
     "warningTitle": "Warning"
   },
   "net": {
     "cannotConnect": "Cannot connect to server",
-    "serverErrorTryAgain": "Server error. Please try again."
+    "serverErrorTryAgain": "Server error, please try again later."
   },
   "chat": {
-    "title": "Chat with Moolaegis",
-    "placeholder": "Ask me anything…",
+    "title": "Moolaegis Advisor",
+    "placeholder": "Type a message...",
     "send": "Send"
   },
   "ocr": {
-    "confirmTitle": "Confirm Your Upload",
+    "confirmTitle": "Invoice OCR",
     "previewAlt": "Preview",
-    "confirm": "Confirm Upload",
-    "resultTitle": "OCR Result (Editable):",
-    "resultAria": "OCR result editable text",
-    "useThis": "Use This"
+    "confirm": "Confirm upload",
+    "resultTitle": "OCR result (editable):",
+    "resultAria": "Editable OCR result text",
+    "useThis": "Use this"
   },
   "feedback": {
     "pageTitle": "User Feedback",
-    "title": "User Feedback",
-    "label": "Your comments *",
-    "submit": "Submit Feedback",
-    "history": "My Feedback Records",
-    "none": "No feedback yet"
+    "title": "Feedback",
+    "label": "Your feedback *",
+    "submit": "Submit",
+    "history": "My feedback",
+    "none": "No feedback yet",
+    "loading": "Loading...",
+    "submitRequired": "Please enter feedback",
+    "submitting": "Submitting...",
+    "submitError": "Submit error",
+    "loadError": "Load failed",
+    "deleteError": "Delete failed",
+    "confirmDeleteTitle": "Confirm delete",
+    "confirmDeleteMsg": "Are you sure to delete this feedback?",
+    "authExpired": "Not logged in or token expired (401).",
+    "placeholder": "Please enter your feedback..."
   },
   "history": {
-  "pageTitle": "History Records",
-  "title": "History Records",
-  "uploadTime": "Upload Time",
-  "fileName": "File Name",
-  "actions": "Actions",
-  "delete": "Delete",
-  "view": "View",
-  "none": "No history records yet"
+    "pageTitle": "History",
+    "title": "History",
+    "uploadTime": "Upload Time",
+    "fileName": "File Name",
+    "actions": "Actions",
+    "openPdf": "Open PDF",
+    "delete": "Delete",
+    "none": "No history yet",
+    "unknownTime": "Unknown time",
+    "reportPrefix": "Forecast Report",
+    "loadError": "Cannot load history:",
+    "errorTitle": "Error",
+    "confirmDeleteTitle": "Delete confirmation",
+    "confirmDeleteMsg": "Are you sure to delete this report? It cannot be recovered.",
+    "deleteError": "Delete failed:",
+    "missingIdOpen": "Missing report ID, cannot open file.",
+    "missingIdDelete": "Missing report ID, cannot delete.",
+    "openFail": "Open PDF failed:"
   },
   "state": {
-  "pageTitle": "Financial Forecast System",
-  "title": "Financial Forecast System",
-  "subtitle": "Input your reporting period and opening/closing balances to instantly view charts and analyses, and export as PDF.",
-
-  "section1": "① Reporting Period",
-  "startDate": "Start Date *",
-  "endDate": "End Date *",
-
-  "section2": "② Assets",
-  "addAsset": "+ Add Asset Account",
-
-  "section3": "③ Liabilities",
-  "addLiab": "+ Add Liability Account",
-
-  "section4": "④ Equity",
-  "addEquity": "+ Add Equity Account",
-
-  "section5": "⑤ Income & Expense Accounts",
-  "addPL": "+ Add Income/Expense Account",
-
-  "section6": "⑥ Forecast Parameters",
-  "generate": "Generate Forecast",
-  "export": "Export as PDF",
-
-  "section7": "⑦ Forecast Results",
-
-  "colAccount": "Account",
-  "colBegin": "Opening",
-  "colEnd": "Closing",
-  "colAmount": "Current Period Amount",
-
-  "paramYears": "Forecast Years (Only 3 or 5)",
-  "option3years": "3 Years",
-  "option5years": "5 Years",
-
-  "paramGrowthMode": "Growth Rate Mode",
-  "optionFixedGrowth": "Fixed Annual Growth Rate",
-  "optionCustomGrowth": "Custom by Year",
-
-  "paramTaxRate": "Effective Tax Rate (%)",
-  "paramDepRate": "Depreciation Rate (%)",
-  "paramCapexRate": "Capital Expenditure (%)",
-  "paramARpct": "Accounts Receivable (%)",
-  "paramInvPct": "Inventory (%)",
-  "paramAPpct": "Accounts Payable (%)",
-    "paramInterestRate": "Interest Rate (%)",
-
-  "asset": {
-    "cash": "Cash and Cash Equivalents",
-    "receivable": "Accounts Receivable",
-    "inventory": "Inventory",
-    "ppe": "Property, Plant, and Equipment (PPE)"
-  },
-
-  "liability": {
-    "payable": "Accounts Payable",
-    "loan": "Loans (Short-term and Long-term)"
-  },
-
-  "equity": {
-    "capital": "Capital Stock",
-    "retainedEarnings": "Beginning Retained Earnings (RE)"
-  },
-
-  "pl": {
-    "revenue": "Operating Revenue",
-    "cogs": "Cost of Goods Sold (COGS)",
-    "expense": "Operating Expenses",
-    "tax": "Income Tax Expense"
-  },
-
-  "numFormat": {
-    "title": "Number Format Settings",
-    "decimalLabel": "Decimal Places",
-    "decimal0": "0 digits",
-    "decimal1": "1 digit",
-    "decimal2": "2 digits",
-    "decimal3": "3 digits",
-    "roundLabel": "Rounding Mode",
-    "round": "Round to Nearest",
-    "ceil": "Round Up (Ceil)",
-    "floor": "Round Down (Floor)"
-  },
-
-  "modal": {
+    "pageTitle": "Forecast System",
+    "title": "Forecast Financial System",
+    "subtitle": "Enter period and opening/closing balances → View charts & analysis and export PDF.",
+    "section1": "① Period",
+    "startDate": "Start date *",
+    "endDate": "End date *",
+    "section2": "② Assets",
+    "addAsset": "+ Add asset",
+    "section3": "③ Liabilities",
+    "addLiab": "+ Add liability",
+    "section4": "④ Equity",
+    "addEquity": "+ Add equity",
+    "section5": "⑤ Income & Expenses",
+    "addPL": "+ Add P&L item",
+    "section6": "⑥ Forecast assumptions",
+    "generate": "Generate Forecast",
+    "export": "Export PDF",
+    "section7": "⑦ Forecast Results",
+    "colAccount": "Account",
+    "colBegin": "Begin",
+    "colEnd": "End",
+    "colAmount": "Amount",
+    "paramYears": "Forecast years (3 or 5)",
+    "option3years": "3 years",
+    "option5years": "5 years",
+    "paramGrowthMode": "Growth mode",
+    "optionFixedGrowth": "Fixed annual growth",
+    "optionCustomGrowth": "Custom per year",
+    "paramInterestRate": "Interest rate (%)",
+    "paramTaxRate": "Tax rate (%)",
+    "paramDepRate": "Depreciation rate (%)",
+    "paramCapexRate": "CapEx / Revenue (%)",
+    "paramARpct": "AR / Revenue (%)",
+    "paramInvPct": "Inventory / COGS (%)",
+    "paramAPpct": "AP / COGS (%)",
     "asset": {
-      "title": "Add Asset Accounts",
-      "intangible": "Intangible Assets",
-      "investment": "Investment Property",
-      "other": "Other Current Assets"
+      "cash": "Cash & Equivalents",
+      "receivable": "Accounts receivable",
+      "inventory": "Inventory",
+      "ppe": "Property, Plant & Equipment (PPE)"
     },
-    "liab": {
-      "title": "Add Liability Accounts",
-      "notesPayable": "Notes Payable",
-      "bondsPayable": "Bonds Payable",
-      "other": "Other Current Liabilities"
+    "liability": {
+      "payable": "Accounts payable",
+      "loan": "Borrowings (short/long)"
     },
     "equity": {
-      "title": "Add Equity Accounts",
-      "capitalSurplus": "Capital Surplus",
-      "treasuryStock": "Treasury Stock (Negative)",
-      "oci": "Accumulated Other Comprehensive Income (AOCI)"
+      "capital": "Share capital",
+      "retainedEarnings": "Opening retained earnings (RE)"
     },
     "pl": {
-      "title": "Add Income & Expense Accounts",
-      "depreciation": "Depreciation Expense",
-      "interest": "Interest Expense",
-      "other": "Other Income/Expense"
+      "revenue": "Revenue",
+      "cogs": "Cost of goods sold",
+      "expense": "Operating expense",
+      "tax": "Income tax expense"
     },
-    "confirm": "Confirm",
+    "numFormat": {
+      "title": "Number format",
+      "decimalLabel": "Decimal places",
+      "decimal0": "0",
+      "decimal1": "1",
+      "decimal2": "2",
+      "decimal3": "3",
+      "roundLabel": "Rounding mode",
+      "round": "Round",
+      "ceil": "Ceil",
+      "floor": "Floor"
+    },
+    "alert": {
+      "requiredField": "Required field missing",
+      "generateSuccess": "Forecast generated",
+      "pdfSuccess": "PDF exported successfully",
+      "pdfFail": "PDF export failed",
+      "generateFirst": "Please generate forecast first",
+      "noResults": "No results area found"
+    },
+    "analysis": {
+      "revenueTitle": "Revenue by Year",
+      "summaryTitle": "Summary (multi-year)",
+      "cfTitle": "Cash Flow Structure",
+      "cccTitle": "Working Capital Efficiency (CCC)",
+      "ratioTitle": "Key Ratios",
+      "commonTitle": "Common-size Statements",
+      "bscheckTitle": "Balance Sheet Check"
+    },
+    "cf": {
+      "operating": "Operating activities",
+      "investing": "Investing activities",
+      "financing": "Financing activities"
+    },
+    "labels": {
+      "base": "Base",
+      "forecast": "Forecast",
+      "growth": "Growth",
+      "vsBase": "vs Base",
+      "netProfit": "Net Profit",
+      "cfoTitle": "Operating Cash Flow (CFO)",
+      "cfiTitle": "Investing Cash Flow (CFI)",
+      "cffTitle": "Financing Cash Flow (CFF)",
+      "cashTitle": "Ending Cash",
+      "cashSub": "CFO + CFI + CFF",
+      "field": "Field",
+      "grossProfit": "Gross Profit",
+      "depreciation": "Depreciation",
+      "interest": "Interest",
+      "pretax": "Pretax profit",
+      "totalAssets": "Total Assets",
+      "totalLiabilitiesEquity": "Total Liabilities + Equity",
+      "ending": "ending",
+      "adjustments": "Adjustments:",
+      "endingCash": "Ending cash & equivalents",
+      "debt": "Borrowings",
+      "dividend": "Cash dividend",
+      "days": "days",
+      "dsoSub": "Days Sales Outstanding",
+      "dioSub": "Days Inventory Outstanding",
+      "dpoSub": "Days Payable Outstanding",
+      "cccSub": "Lower is better",
+      "metric": "Metric",
+      "grossMargin": "Gross margin",
+      "netMargin": "Net margin",
+      "fcfMargin": "Free cash flow margin",
+      "debtRatio": "Debt ratio",
+      "incomeAsPct": "Income Statement (% of Revenue)",
+      "bsAsPct": "Balance Sheet (% of Total Assets)",
+      "custom": "Custom",
+      "diff": "Difference",
+      "beginningCash":"Beginning Cash"
+    },
+    "button":{
+      "generateForecast":"Generate Forecast",
+      "exportPDF":"Export PDF"
+    }
+  },
+  "common": {
+    "ok": "OK",
     "cancel": "Cancel",
-    "existsHint": "(Already Exists)"
-  },
-
-  "alert": {
-    "requiredField": "Required field cannot be empty",
-    "generateSuccess": "Forecast generated successfully",
-    "pdfSuccess": "PDF exported successfully",
-    "pdfFail": "Failed to export PDF"
-  },
-  "analysis": {
-    "revenueTitle": "Annual Operating Revenue",
-    "summaryTitle": "Key Summary (Multi-Year)",
-    "cfTitle": "Cash Flow Structure",
-    "cccTitle": "Operating Efficiency (CCC)",
-    "ratioTitle": "Key Financial Ratios",
-    "commonTitle": "Common-Size Statements",
-    "bscheckTitle": "Balance Sheet Consistency Check"
+    "close": "Close",
+    "confirm": "Confirm",
+    "back": "Back",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "loading": "Loading...",
+    "error": "An error occurred, please try again."
   }
-}
-
 }

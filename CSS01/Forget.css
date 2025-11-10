@@ -87,12 +87,29 @@ body{
     font-weight: 600;
 }
 
-.btn-group .back-btn{
-  background: #9a9590;
+.btn-group .back-btn,
+.btn-group .reset-btn {
+  transition: all 0.2s ease;
 }
 
-.btn-group .reset-btn{
+.btn-group .back-btn {
+  background: #CDCDCD;
+  color: #fff;
+}
+
+.btn-group .back-btn:hover {
+  background: #9a9590;
+  color: #000;
+}
+
+.btn-group .reset-btn {
   background: #fff;
+  color: #000;
+}
+
+.btn-group .reset-btn:hover {
+  background: #CDCDCD;
+  color: #fff;
 }
 
 .wrapper .register-link{
@@ -116,32 +133,32 @@ body{
 #modalLayer {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.35);
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(2px);
-  display: none;                  /* 預設隱藏 */
+  display: none;
   align-items: center;
   justify-content: center;
   z-index: 9999;
 }
+
 #modalBox {
   min-width: 260px;
   max-width: 90vw;
-  padding: 20px 30px;
-  border-radius: 16px;
-  background: rgba(245, 245, 245, .35);
+  padding: 24px 32px;
+  border-radius: 15px;
+  background: rgba(245, 245, 245, 0.9);
   border: 1px solid rgba(255,255,255,.4);
-  backdrop-filter: blur(80px);
-  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   text-align: center;
-  font-family: "Inter", sans-serif;
 }
 #modalBox h2 {
   margin: 0 0 8px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
 }
 #modalBox p {
-  margin: 0 0 24px;
+  margin: 0 0 20px;
   font-size: 14px;
   line-height: 1.6;
 }
@@ -159,6 +176,17 @@ body{
 
 #modalMsg:empty {
   display: none;
+}
+
+.footer-copyright {
+  position: fixed;
+  bottom: 10px;
+  left: 20px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: "Inter", "Noto Sans TC", sans-serif;
+  z-index: 1000;
+  user-select: none;
 }
 
 

@@ -49,9 +49,6 @@
 </head>
 <body>
   <div class="wrapper">
-    <!-- 語言下拉一定要放在 wrapper 的第一個子元素 -->
-    <div data-include="header"></div>
-
     <form id="forgetForm" novalidate>
       <h1 data-i18n="auth.resetTitle">Reset password</h1>
 
@@ -94,6 +91,10 @@
       <button id="modalBtn" data-i18n="modal.ok">OK</button>
     </div>
   </div>
+
+  <footer class="footer-copyright">
+    © <span id="copyright-year"></span> Moolaegis. All rights reserved.
+  </footer>
 
   <!-- JS：純相對路徑版 -->
   <script type="module" src="JS01/Forget.js"></script>

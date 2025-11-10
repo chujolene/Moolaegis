@@ -6,9 +6,46 @@ html, body {
   padding: 0;
 }
 
+/* === Navbar === */
+/* === Navbar === */
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 40px;
+
+  backdrop-filter: blur(12px); /* Background blur effect */
+  -webkit-backdrop-filter: blur(12px); /* Safari support */
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+  
+  position: fixed;  /* Fixes the navbar at the top */
+  top: 0;           /* Ensures it stays at the top */
+  left: 0;
+  right: 0;
+  z-index: 1000;     /* Ensures the navbar stays on top of other elements */
+}
+
+
+
+.nav-links a {
+  text-decoration: none;
+  color: #000;                 /* Navbar 連結 = 黑色 */
+  font-weight: 600;
+  margin-left: 24px;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #f5f5f5;
+}
+
+/* === Main Content === */
 body {
-  font-family: "Inter", "Noto Sans TC", sans-serif;
-  color: #111418;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #000;
+
   background-image: url('img1.png');
   background-size: cover;
   background-position: center;
@@ -19,46 +56,21 @@ body {
   overflow-x: hidden;
 }
 
-/* ====== 導覽列 ====== */
-.navbar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 14px 48px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 28px;
-}
-
-.nav-links a {
-  text-decoration: none;
-  color: #111418;
-  font-weight: 500;
-  font-size: 15px;
-}
-
-.nav-links a:hover {
-  text-decoration: underline;
-}
-
-/* ====== 主內容區 ====== */
 .main-content {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
-  padding-top: 20px;
+  align-items: flex-start;
+  padding-top: 60px;
   width: 100%;
-  max-width: 1100px;     
-  margin: 0 auto;         
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .page-title {
   font-size: 34px;
   font-weight: 800;
   margin-bottom: 28px;
-  margin-left: 5px; 
+  margin-left: 5px;
 }
 
 /* ====== 表格區塊 ====== */
@@ -109,41 +121,125 @@ body {
   padding: 6px 14px;
   font-size: 14px;
   font-weight: 600;
-  border-radius: 6px;
+  border-radius: 999px;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
-/* ====== Open PDF 按鈕 ====== */
+/* Open PDF 按鈕 */
 .action-open {
-  background-color: #97A5C0;  /* 藍色主題 */
+  background-color: #85929A;
   color: #fff;
-  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.18);
 }
 
 .action-open:hover {
-  background-color: #1d4ed8;
+  background-color: #ccc;
   box-shadow: 0 3px 6px rgba(37, 99, 235, 0.25);
   transform: translateY(-1px);
 }
 
-/* ====== Delete 按鈕 ====== */
+/* Delete 按鈕 */
 .action-delete {
-  background-color: #E4B69E;
+  background-color: #e57373;
   color: #fff;
-  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
+  box-shadow: 0 2px 4px rgba(225, 29, 72, 0.2);
   margin-left: 8px;
 }
 
 .action-delete:hover {
-  background-color: #dc2626;
-  box-shadow: 0 3px 6px rgba(239, 68, 68, 0.25);
+  background-color: #e53935;
+  box-shadow: 0 3px 6px rgba(185, 28, 28, 0.25);
   transform: translateY(-1px);
 }
 
-/* ====== 按鈕在表格中的排列 ====== */
+/* ====== 共用 ====== */
 .history-table td button {
   margin-right: 4px;
 }
 
+.hidden {
+  display: none !important;
+}
+
+/* ====== Modal 樣式（取代 alert / confirm，沿用 feedback 風格） ====== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  display: flex;                 /* 預設為可見，由 .hidden 控制隱藏 */
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* 對應 feedback 的 #modalBox */
+.modal-container {
+  background: rgba(245, 245, 245, 0.9);
+  border-radius: 15px;
+  padding: 24px 32px;
+  text-align: center;
+  max-width: 320px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(20px);
+  color: #333;
+}
+
+/* 標題：等同 #modalBox h2 */
+.modal-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* 內文：等同 #modalBox p */
+.modal-message {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+  color: #333;
+}
+
+/* 按鈕：等同 #modalBox button */
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.modal-btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+  background: #e57373;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+
+.modal-btn-secondary { background:#ccc; color:#333; }
+
+.modal-btn.modal-btn-secondary:hover {
+  background: #b5b5b5;
+}
+
+.modal-btn:hover {
+  background: #e53935;
+}
+
+.footer-copyright {
+  position: fixed;
+  bottom: 10px;
+  left: 20px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: "Inter", "Noto Sans TC", sans-serif;
+  z-index: 1000;
+  user-select: none;
+}

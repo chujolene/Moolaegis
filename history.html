@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title data-i18n="history.pageTitle">歷史紀錄</title>
-  <link rel="stylesheet" href="CSS02/history.css" />
+  <link rel="stylesheet" href="CSS02/History.css" />
   <link rel="icon" href="data:;base64,=" />
 </head>
 
 <body>
-  <!-- 🔹 導覽列 -->
   <header class="navbar">
     <nav class="nav-links">
       <a href="Home.html" data-i18n="nav.home">首頁</a>
       <a href="state.html" data-i18n="nav.state">預測財報</a>
+      <a href="Feedback.html" data-i18n="nav.feedback">意見回饋</a>
     </nav>
   </header>
 
-  <!-- 🔹 主內容 -->
   <main class="main-content">
     <h1 class="page-title" data-i18n="history.title">歷史紀錄</h1>
 
@@ -37,12 +36,40 @@
     </section>
   </main>
 
+  <!-- Modal：共用 alert / confirm -->
+  <div id="app-modal-backdrop" class="modal-backdrop hidden">
+    <div class="modal-container">
+      <!-- 預設不放文字，讓 JS 決定要不要顯示 -->
+      <h2 id="app-modal-title" class="modal-title"></h2>
+      <p id="app-modal-message" class="modal-message"></p>
+      <div class="modal-actions">
+        <button
+          id="app-modal-cancel"
+          class="modal-btn modal-btn-secondary hidden"
+          data-i18n="common.cancel"
+        >
+          取消
+        </button>
+        <button
+          id="app-modal-ok"
+          class="modal-btn modal-btn-primary"
+          data-i18n="common.ok"
+        >
+          確認
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer-copyright">
+    © <span id="copyright-year"></span> Moolaegis. All rights reserved.
+  </footer>
+
   <chat-icon></chat-icon>
+
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script type="module" src="./src/components/chat-icon/chat-icon.js"></script>
-  <script type="module" src="./history.js"></script>
-
-  <!-- 🔹 多語系支援腳本 -->
+  <script type="module" src="JS02/History.js"></script>
   <script defer src="./language/js/include-header.js"></script>
   <script defer src="./language/js/i18n.js"></script>
 </body>

@@ -1,3 +1,4 @@
+// forget.js
 import { API_BASE_URL } from '../config.js';
 const forgetPasswordURL = `${API_BASE_URL}/auth/forget-password`;
 
@@ -6,10 +7,14 @@ const modalTitle = document.getElementById('modalTitle');
 const modalMsg   = document.getElementById('modalMsg');
 const modalBtn   = document.getElementById('modalBtn');
 
+// ✅ 多語系安全取用（與 Login.js 相同）
+const t = (key, vars) =>
+  (window.I18N && typeof window.I18N.t === 'function') ? window.I18N.t(key, vars) : key;
 
-function showModal(title, msg, cb) {
-  modalTitle.textContent = title;
-  modalMsg.textContent = msg;
+// ✅ 用翻譯 key 顯示 Modal
+function showModalKey(titleKey, msgKey, cb) {
+  modalTitle.textContent = t(titleKey);
+  modalMsg.textContent   = t(msgKey);
   modalLayer.style.display = 'flex';
   modalBtn.onclick = () => {
     modalLayer.style.display = 'none';
@@ -17,34 +22,41 @@ function showModal(title, msg, cb) {
   };
 }
 
-document.getElementById('forgetForm').addEventListener('submit', function (e) {
+// ✅ form submit 事件
+document.getElementById('forgetForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const email = document.getElementById('email').value.trim();
-  const newPassword = document.getElementById('new_password').value;
+  const email = e.target.email.value.trim();
+  const newPassword = e.target.new_password.value;
 
   if (!email || newPassword.length < 6) {
-    showModal('Warning', 'Please fill all fields and use at least 6 characters');
+    showModalKey('modal.warningTitle', 'form.fillAllFieldsOrMin');
     return;
   }
 
-  fetch(forgetPasswordURL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, new_password: newPassword })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.status === "success") {
-      showModal('Success', 'Password reset successful', () => {
+  try {
+    const response = await fetch(forgetPasswordURL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, new_password: newPassword })
+    });
+
+    const data = await response.json();
+
+    if (data.status === 'success') {
+      showModalKey('modal.successTitle', 'auth.passwordResetSuccess', () => {
         window.location.href = 'Login.html';
       });
     } else {
-      showModal('Error', data.message || 'User not found');
+      // 若後端提供 message，可嘗試 map 出對應翻譯 key
+      const msgKey =
+        data.message?.toLowerCase().includes('not found')
+          ? 'auth.userNotFound'
+          : 'auth.passwordResetFailed';
+      showModalKey('modal.errorTitle', msgKey);
     }
-  })
-  .catch(err => {
-    console.error("Error:", err);
-    showModal('Error', 'Server error. Please try again.');
-  });
+  } catch (error) {
+    console.error('Error:', error);
+    showModalKey('modal.errorTitle', 'net.cannotConnect');
+  }
 });

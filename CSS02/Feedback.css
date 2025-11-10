@@ -1,0 +1,345 @@
+/* === Navbar === */
+header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  backdrop-filter: blur(12px);            /* ✅ 核心：背景模糊 */
+  -webkit-backdrop-filter: blur(12px);    /* Safari 支援 */
+  transition: background 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 20px 40px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #000;                 /* Navbar 連結 = 黑色 */
+  font-weight: 600;
+  margin-left: 24px;
+  transition: color 0.2s ease;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  color: #f5f5f5;
+}
+
+/* === Main Content === */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;                 /* 一般文字預設 = #333 */
+
+  background-image: url('img1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #f5f5f5;
+}
+
+main {
+  max-width: 1000px;
+  margin: 40px auto 60px auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: left;
+  color: #000;                 /* 標題 = 黑色 */
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+
+/* === Feedback Form === */
+.feedback-form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+/* 讓「您的意見」標題樣式與「我的回饋紀錄」一致 */
+.feedback-form label[for="comment"] {
+  display: block;
+  margin: 0 0 5px;
+  color: #000;        /* 和 h3 一樣黑色 */
+  font-size: 18px;    /* 和 h3 相同字級 */
+  font-weight: 600;   /* 與區塊標題一致的粗體感 */
+}
+
+textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 15px;
+  resize: vertical;
+  min-height: 100px;
+  margin-top: 8px;
+  color: #333;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+button {
+  background-color: #85929A;
+  color: #fff;                 /* 按鈕維持白字 */
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #ccc;
+}
+
+/* === Feedback List === */
+.feedback-list {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feedback-list h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #000;                 /* 區塊標題 = 黑色 */
+  font-size: 18px;
+}
+
+.no-feedback {
+  text-align: center;
+  color: #333;
+  padding: 20px;
+}
+
+#comment {
+  width: 97%;
+  max-width: 1050px;
+  min-width: 300px;
+  resize: vertical;
+  display: block;
+  margin: 10px auto 0;
+}
+
+/* === Feedback List Items === */
+.feedback-item {
+  padding: 12px 0;
+  border-top: 1px solid #eee;
+}
+.feedback-item:first-child {
+  border-top: none;
+}
+
+.feedback-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.feedback-user {
+  font-weight: 600;
+  color: #000;                 /* 若未來有顯示使用者名稱，可設為黑色標題感 */
+}
+
+.feedback-time {
+  font-size: 13px;
+  color: #aaa;                 
+}
+
+.feedback-actions {
+  margin-left: auto;
+}
+
+/* 刪除鍵 */
+.feedback-delete {
+  margin-top: 0;
+  background: transparent;
+  color: #666;                 /* 保持較淡，視覺上像功能鍵 */
+  border: 1px solid #cfd8dc;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.feedback-delete:hover {
+  background: #ffecec;
+  border-color: #e57373;
+  color: #e53935;
+}
+
+/* 內文排版 */
+.feedback-comment {
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: #333;                 /* 回饋內容 = #333 */
+}
+
+/* 載入/錯誤狀態（保留既有顏色邏輯） */
+.loading { color: #666; text-align: center; }
+.error { color: #d32f2f; text-align: center; }
+
+/* ===========================================================
+   📦 Modal 樣式（與 Confirm 同風格，統一字體與色彩）
+   =========================================================== */
+
+/* 通用字體 */
+#modalBox,
+#confirmBox {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ====== Modal Layer ====== */
+#modalLayer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#modalBox {
+  background: rgba(245, 245, 245, 0.9);
+  border-radius: 15px;
+  padding: 24px 32px;
+  text-align: center;
+  max-width: 320px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(20px);
+  color: #333;                 /* 內文預設 #333 */
+}
+
+#modalBox h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;                 /* Modal 標題 = 黑色 */
+}
+
+#modalBox p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+  color: #333;
+}
+
+#modalBox button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+  background: #2ecc71;
+  color: #fff;                 /* 按鈕維持白字 */
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#modalBox button:hover {
+  background: #28b765;
+}
+
+/* ====== Confirm Layer ====== */
+#confirmLayer {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+#confirmBox {
+  background: rgba(245, 245, 245, 0.9);
+  border-radius: 15px;
+  padding: 24px 32px;
+  text-align: center;
+  max-width: 320px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(20px);
+  color: #333;                 /* 內文預設 #333 */
+}
+
+#confirmBox h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;                 /* Confirm 標題 = 黑色 */
+}
+
+#confirmBox p {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+  color: #333;
+}
+
+.confirm-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+
+#confirmCancel,
+#confirmOk {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#confirmCancel {
+  background: #ccc;
+  color: #000;                 /* 這是按鈕，維持黑字 */
+}
+
+#confirmOk {
+  background: #2ecc71;
+  color: #fff;                 /* 按鈕白字 */
+}
+
+#confirmOk:hover {
+  background: #28b765;
+}
+
+#confirmCancel:hover {
+  background: #b5b5b5;
+}
+
+.footer-copyright {
+  position: fixed;
+  bottom: 10px;
+  left: 20px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: "Inter", "Noto Sans TC", sans-serif;
+  z-index: 1000;
+  user-select: none;
+}
+

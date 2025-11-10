@@ -1,20 +1,19 @@
 {
-   "page": {
+  "page": {
     "title": "Moolaegis",
     "loginTitle": "登入 • Moolaegis",
     "registerTitle": "註冊 • Moolaegis",
     "forgetTitle": "重設密碼 • Moolaegis",
     "homeTitle": "首頁 • Moolaegis",
-     "chatTitle": "生成報表 • Moolaegis"
+    "chatTitle": "生成報表 • Moolaegis"
   },
-   "nav": {
+  "nav": {
     "home": "首頁",
     "state": "預測財報",
     "history": "歷史報表",
-    "settings": "設定",
     "feedback": "意見回饋"
   },
-  "ui": { 
+  "ui": {
     "back": "返回",
     "close": "關閉"
   },
@@ -25,31 +24,24 @@
     "welcomeBackPrefix": "歡迎回來，",
     "settings": "設定",
     "logout": "登出",
-
     "fs": {
       "title": "財務報表",
       "desc": "只需輸入關鍵指標，快速生成財務預測報表。",
       "cta": "生成報表"
-    },
-    "sa": {
-      "title": "敏感度分析",
-      "desc": "動態調整假設參數，立即比較各科目對不同情境的敏感度與變動幅度。",
-      "cta": "立即分析"
-    },
+      },
     "hr": {
       "title": "歷史報表",
-      "desc": "瀏覽、搜尋與管理過往產出的所有財務報表。",
+      "desc": "瀏覽與管理過往產出的所有財務報表。",
       "cta": "檢視歷史報表"
     }
   },
-
-  "form": { 
+  "form": {
     "email": "電子郵件",
-    "username": "使用者名稱", 
+    "username": "使用者名稱",
     "password": "密碼",
     "newPassword": "新密碼",
     "fillAllFields": "請填寫所有欄位",
-    "fillAllFieldsOrMin": "請填寫所有欄位，且密碼長度需 \u2265 {n} 字元",
+    "fillAllFieldsOrMin": "請填寫所有欄位，且密碼長度需 \u2265 6 字元",
     "invalidEmail": "電子郵件格式不正確",
     "passwordMin": "密碼長度至少 {n} 個字元"
   },
@@ -68,7 +60,9 @@
     "registerSuccess": "註冊成功",
     "registerFailed": "註冊失敗",
     "emailTaken": "此電子郵件已被使用",
-    "usernameTaken": "此使用者名稱已被使用"
+    "usernameTaken": "此使用者名稱已被使用",
+    "passwordResetSuccess": "密碼重設成功",
+    "passwordResetFailed": "密碼重設失敗"
   },
   "modal": {
     "title": "提醒",
@@ -76,7 +70,7 @@
     "defaultMsg": "請檢查您的輸入。",
     "successTitle": "成功",
     "errorTitle": "錯誤",
-    "warningTitle": "提醒"
+    "warningTitle": "操作提示"
   },
   "net": {
     "cannotConnect": "無法連接伺服器",
@@ -101,90 +95,102 @@
     "label": "您的意見 *",
     "submit": "送出意見",
     "history": "我的回饋紀錄",
-    "none": "目前尚無回饋"
+    "none": "目前尚無回饋",
+    "loading": "載入中...",
+    "submitRequired": "請先輸入您的回饋",
+    "submitting": "送出中...",
+    "submitError": "送出時發生錯誤",
+    "loadError": "載入失敗",
+    "deleteError": "刪除時發生錯誤",
+    "confirmDeleteTitle": "確認刪除",
+    "confirmDeleteMsg": "確定要刪除這筆回饋嗎？",
+    "authExpired": "尚未登入或憑證過期（401）。",
+    "placeholder": "請輸入您的回饋..."
   },
-  "history": {
-  "pageTitle": "歷史紀錄",
-  "title": "歷史紀錄",
-  "uploadTime": "上傳時間",
-  "fileName": "檔案名稱",
-  "actions": "操作",
-  "delete": "刪除",
-  "view": "檢視",
-  "none": "目前尚無歷史紀錄"
+   "history": {
+    "pageTitle": "歷史紀錄",
+    "title": "歷史紀錄",
+    "uploadTime": "上傳時間",
+    "fileName": "檔案名稱",
+    "actions": "操作",
+
+    "openPdf": "開啟 PDF",
+    "delete": "刪除",
+
+    "none": "目前尚無歷史紀錄",
+    "unknownTime": "未知時間",
+
+    "reportPrefix": "財報預測",
+
+    "loadError": "無法載入歷史紀錄：",
+    "errorTitle": "錯誤",
+
+    "confirmDeleteTitle": "刪除確認",
+    "confirmDeleteMsg": "確定要刪除這份報告嗎？刪除後將無法復原。",
+
+    "deleteError": "刪除失敗：",
+    "missingIdOpen": "找不到報告 ID，無法開啟檔案。",
+    "missingIdDelete": "找不到報告 ID，無法刪除。",
+    "openFail": "PDF 開啟失敗："
   },
   "state": {
     "pageTitle": "預測財報系統",
     "title": "預測財報系統",
     "subtitle": "依序輸入「報表期間與期初/期末」資料 → 即時檢視圖表與財務分析，並可匯出為 PDF 檔案。",
-
     "section1": "① 報表期間",
     "startDate": "開始日 *",
     "endDate": "結束日 *",
-
     "section2": "② 資產 (Assets)",
     "addAsset": "＋新增資產科目",
-
     "section3": "③ 負債 (Liabilities)",
     "addLiab": "＋新增負債科目",
-
     "section4": "④ 權益 (Equity)",
     "addEquity": "＋新增權益科目",
-
     "section5": "⑤ 期間損益科目 (Income & Expenses)",
     "addPL": "＋新增損益科目",
-
     "section6": "⑥ 預測參數",
     "generate": "生成預測財報",
     "export": "匯出預測（PDF）",
-
     "section7": "⑦ 預測結果",
-
     "colAccount": "科目",
     "colBegin": "期初",
     "colEnd": "期末",
     "colAmount": "本期金額",
-
     "paramYears": "預測年數（僅 3 或 5）",
     "option3years": "3 年",
     "option5years": "5 年",
-
     "paramGrowthMode": "成長率模式",
     "optionFixedGrowth": "固定年成長率",
     "optionCustomGrowth": "自訂每年",
-
+    "paramInterestRate": "借款利率（%）",
     "paramTaxRate": "有效稅率（%）",
-    "paramDepRate": "折舊率（Dep / 期初PPE, %）",
+    "paramDepRate": "折舊率（%）",
     "paramCapexRate": "資本支出 / 營收（%）",
     "paramARpct": "應收帳款 / 營收（%）",
     "paramInvPct": "存貨 / 營業成本（%）",
     "paramAPpct": "應付帳款 / 營業成本（%）",
-     "paramInterestRate": "借款利率（%）",
-
     "asset": {
       "cash": "現金及約當現金",
       "receivable": "應收帳款",
       "inventory": "存貨",
-      "ppe": "不動產、廠房及設備（PPE）"
+      "ppe": "不動產、廠房及設備"
     },
-
     "liability": {
       "payable": "應付帳款",
-      "loan": "借款（含長短期）"
+      "debt": "借款（含長短期）"
     },
-
     "equity": {
       "capital": "股本",
-      "retainedEarnings": "期初保留盈餘（RE）"
+      "retainedEarnings": "期初保留盈餘"
     },
-
     "pl": {
       "revenue": "營業收入",
       "cogs": "營業成本",
       "expense": "營業費用",
-      "tax": "所得稅費用"
+      "tax": "所得稅費用",
+      "title": "年度三大報表",
+      "IS": "綜合損益表"
     },
-
     "numFormat": {
       "title": "數字格式設定",
       "decimalLabel": "小數位數",
@@ -197,51 +203,79 @@
       "ceil": "無條件進位",
       "floor": "無條件捨去"
     },
-
-    "modal": {
-      "asset": {
-        "title": "新增 Asset 科目",
-        "intangible": "無形資產",
-        "investment": "投資性不動產",
-        "other": "其他流動資產"
-      },
-      "liab": {
-        "title": "新增 Liability 科目",
-        "notesPayable": "應付票據",
-        "bondsPayable": "應付公司債",
-        "other": "其他流動負債"
-      },
-      "equity": {
-      "title": "新增 Equity 科目",
-      "capitalSurplus": "資本公積",
-      "treasuryStock": "庫藏股（負數）",
-      "oci": "其他綜合損益累計"
-      },
-      "pl": {
-        "title": "新增 Expense 科目",
-        "depreciation": "折舊費用（由折舊率自動計算）",
-        "interest": "利息費用",
-        "other": "其他收益/費損"
-      },
-      "confirm": "確認新增",
-      "cancel": "取消",
-      "existsHint": "（已存在）"
+    "labels":{
+      "growth": "成長率(%)",
+      "base": "基期",
+      "forecast":"預測年度",
+      "netProfit":"本期淨利",
+      "cfoTitle": "營業活動現金流量淨額",
+      "endingCash":"期末現金",
+      "depreciation":"折舊費用",
+      "interest":"利息費用",
+      "totalAssets":"總資產",
+      "totalLiabilitiesEquity":"總資產 + 權益",
+      "diff":"相差",
+      "grossProfit": "營業毛利",
+      "pretax": "稅前淨利",
+      "ending": "期末",
+      "adjustments":"調整：",
+      "dividend":"保留盈餘",
+      "days":"天",
+      "dsoSub":"應收帳款週轉天數",
+      "dioSub":"存貨週轉天數",
+      "dpoSub":"應付帳款週轉天數",
+      "cccSub":"愈低愈好",
+      "grossMargin":"毛利率",
+      "netMargin":"淨利率",
+      "fcfMargin":"自由現金流量比率",
+      "debtRatio":"負債比率",
+      "beginningCash":"期初現金"
     },
-
     "alert": {
       "requiredField": "必填欄位不可留空",
       "generateSuccess": "預測生成成功",
       "pdfSuccess": "PDF 匯出成功",
       "pdfFail": "PDF 匯出失敗"
-    }, 
+    },
     "analysis": {
       "revenueTitle": "各年度營業收入",
-      "summaryTitle": "重點彙整（多年度）",
+      "summaryIS": "多年度綜合損益表",
+      "summaryBS":"多年度資產負債表",
       "cfTitle": "現金流結構",
       "cccTitle": "營運效率（CCC）",
       "ratioTitle": "常用比率（核心指標）",
       "commonTitle": "共同比報表",
-      "bscheckTitle": "資產負債平衡檢查"
+      "bscheckTitle": "資產負債平衡檢查",
+      "summaryTitle":"多年度報表比較"
+    },
+    "bs":{
+      "title": "資產負債表"
+    },
+    "cf":{
+      "title":"現金流量表",
+      "operating":"營業活動現金流量",
+      "cfoTitle":"營業活動現金流量淨額",
+      "investing":"投資活動現金流量",
+      "cfiTitle":"投資活動現金流量淨額",
+      "financing":"融資活動現金流量",
+      "cffTitle":"融資活動現金流量淨額"
+    },
+    "button":{
+      "generateForecast":"生成預測財報",
+      "exportPDF":"匯出 PDF"
     }
+  },
+  "common": {
+    "ok": "確定",
+    "cancel": "取消",
+    "close": "關閉",
+    "confirm": "確認",
+    "back": "返回",
+    "save": "儲存",
+    "edit": "編輯",
+    "delete": "刪除",
+    "loading": "載入中...",
+    "error": "發生錯誤，請稍後再試。",
+    "field":"欄位"
   }
 }

@@ -8,7 +8,7 @@
   <!-- 圖表套件（沿用原本 Chart.js） -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <link rel="stylesheet" href="1107.css" />
+  <link rel="stylesheet" href="CSS02/1110.css" />
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 
@@ -17,9 +17,9 @@
   <header class="header">
     <div class="header-right">
       <div class="nav-links">
-        <a class="nav-link" href="Home.html">Home</a>
-        <a class="nav-link" href="history.html">History</a>
-        <!-- <a class="nav-link" href="settings.html">設定</a> -->
+        <a class="nav-link" href="Home.html" data-i18n="nav.home">首頁</a>
+        <a class="nav-link" href="History.html" data-i18n="nav.history">歷史紀錄</a>
+        <a class="nav-link" href="Feedback.html" data-i18n="nav.feedback">意見回饋</a>
       </div>
     </div>
   </header>
@@ -226,7 +226,7 @@
         </tr>
         <!-- 新增利息費用!!!!! -->
         <tr>
-          <td class="left" data-i18n="state.modal.pl.interest">利息費用</td>
+          <td class="left" data-i18n="state.labels.interest">利息費用</td>
           <td><input type="number" id="interest_expense" value="400" step="1000" required></td>
           <td></td>
         </tr>
@@ -257,6 +257,7 @@
         </select>
       </div>
 
+      <!--
       <div>
         <label data-i18n="state.paramGrowthMode">成長率模式</label>
         <select id="growth_mode" onchange="renderGrowthInputs()">
@@ -264,6 +265,7 @@
           <option value="custom" data-i18n="state.optionCustomGrowth">自訂每年</option>
         </select>
       </div>
+      -->
 
       <div id="growth_inputs"><!-- 動態產生 --></div>
         <div>
@@ -290,18 +292,27 @@
           <label data-i18n="state.paramAPpct">應付帳款 / 營業成本（%）</label>
           <input type="number" id="ass_ap_pct" value="8" step="0.1">
         </div>
-        <div>
-        <label data-i18n="state.paramInterestRate">借款利率（%）</label>
-        <input type="number" id="ass_interest_rate" value="3" step="0.1">
-      </div>
       </div>
       
+      
 
-      <div style="margin-top:12px">
-        <button class="btn" onclick="generateForecast()">生成預測財報</button>
-        <button class="btn ghost" onclick="exportForecastPDF()">匯出預測（PDF）</button>
-      </div>
+     <div style="margin-top:12px">
+      <button
+        class="btn"
+        onclick="generateForecast()"
+        data-i18n="state.button.generateForecast"
+      >
+        生成預測財報
+      </button>
 
+      <button
+        class="btn ghost"
+        onclick="exportForecastPDF()"
+        data-i18n="state.button.exportPDF"
+      >
+        exportPDF
+      </button>
+    </div>
   </div>
 
   <!-- ⑦ 預測結果 -->
@@ -471,7 +482,11 @@
 
 <chat-icon></chat-icon>
 
-<script type="module" src="1109.js"></script>
+<footer class="footer-copyright">
+    © <span id="copyright-year"></span> Moolaegis. All rights reserved.
+  </footer>
+
+<script type="module" src="JS02/state1110.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script type="module" src="src/components/chat-icon/chat-icon.js"></script>

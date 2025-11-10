@@ -3,24 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title data-i18n="page.loginTitle">Login • Moolaegis</title>
+  <title data-i18n="page.title">Moolaegis</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="CSS01/Login.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="CSS01/Main.css" />
+
+  <!-- （可選）避免 favicon 404 -->
   <link rel="icon" href="data:," />
   <!-- <script>window.LANG_BASE = '../language';</script> -->
 
-  <!-- 讓語言選單能相對 .wrapper 定位，且不被裁切 -->
   <style>
     .i18n-header__select{
     padding:.25rem .5rem; 
     border-radius:.5rem; 
     border:1px solid #ddd; 
-    background:#c8c0ae;
-    backdrop-filter: blur(20px);
+    background:#fafafa;
     font: 600 16px/1.2 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans";
-    color: #fff;
+    color: #333;
     }
     .wrapper { 
       position: relative; 
@@ -29,7 +28,7 @@
     .i18n-header{
     position: absolute;
     right: 0;
-    bottom: calc(100% + 8px);  
+    bottom: calc(100% + 8px);  /* 🔑 距離 wrapper 上緣 8px，可自行調整 */
     z-index: 10;
 
     display: flex;
@@ -47,55 +46,27 @@
   }
   </style>
 </head>
+
 <body>
+  
   <div class="wrapper">
-    <form id="loginForm" novalidate>
-      <h1 data-i18n="auth.login">Login</h1>
+    <div data-include="header"></div>
+    <h1>
+      <span data-i18n="home.welcome">Welcome to</span>
+      <span class="brand">"Moolaegis"</span>
+    </h1>
 
-      <div class="input-box">
-        <input type="text" name="username"
-               placeholder="Username"
-               data-i18n-placeholder="form.username" autocomplete="username">
-        <i class="bx bx-user" aria-hidden="true"></i>
-      </div>
-
-      <div class="input-box">
-        <input type="password" name="password"
-               placeholder="Password"
-               data-i18n-placeholder="form.password" autocomplete="current-password">
-        <i class="bx bx-lock" aria-hidden="true"></i>
-      </div>
-
-      <div class="forgot-password">
-        <a href="Forget.html" data-i18n="auth.forgot">Forgot password?</a>
-      </div>
-
-      <button type="submit" class="btn" data-i18n="auth.login">Login</button>
-
-      <div class="register-link">
-        <p>
-          <span data-i18n="auth.noAccount">No account?</span>
-          <a href="Register.html" data-i18n="auth.signup">Sign Up</a>
-        </p>
-      </div>
+    <form class="btn-group" method="get">
+      <button type="submit" class="btn signup" formaction="Register.html" data-i18n="home.signup">Sign Up</button>
+      <button type="submit" class="btn login"  formaction="login.html"    data-i18n="home.login">Login</button>
     </form>
-  </div>
-
-  <!-- ─── Modal ─── -->
-  <div id="modalLayer" hidden>
-    <div id="modalBox">
-      <h2 id="modalTitle" data-i18n="modal.title">Title</h2>
-      <p id="modalMsg" data-i18n="modal.defaultMsg">Message</p>
-      <button id="modalBtn" data-i18n="modal.ok">OK</button>
-    </div>
   </div>
 
   <footer class="footer-copyright">
     © <span id="copyright-year"></span> Moolaegis. All rights reserved.
   </footer>
 
-  <!-- JS：純相對路徑版 -->
-  <script type="module" src="JS01/Login.js"></script>
+  <!-- 兩支 i18n 腳本（保持相對路徑） -->
   <script defer src="./language/js/include-header.js"></script>
   <script defer src="./language/js/i18n.js"></script>
 </body>

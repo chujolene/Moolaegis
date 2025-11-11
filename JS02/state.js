@@ -314,12 +314,34 @@ function bindThousandsFormat() {
       if (input.value) {
         input.value = formatWithCommas(input.value.replace(/,/g, ""));
       }
-      input.addEventListener("input", (e) => {
+
+      let isComposing = false;
+
+      // Handle 'compositionstart' to flag when the user starts composing
+      input.addEventListener("compositionstart", () => {
+        isComposing = true;
+      });
+
+      // Handle 'compositionend' to apply formatting once composition ends
+      input.addEventListener("compositionend", (e) => {
+        isComposing = false;
         const raw = e.target.value.replace(/,/g, "");
         if (raw === "" || isNaN(raw)) {
           e.target.value = "";
         } else {
           e.target.value = formatWithCommas(raw);
+        }
+      });
+
+      // Real-time input event formatting, but only if not composing
+      input.addEventListener("input", (e) => {
+        if (!isComposing) {
+          const raw = e.target.value.replace(/,/g, "");
+          if (raw === "" || isNaN(raw)) {
+            e.target.value = "";
+          } else {
+            e.target.value = formatWithCommas(raw);
+          }
         }
       });
     });

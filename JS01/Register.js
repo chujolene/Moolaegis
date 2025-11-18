@@ -70,7 +70,7 @@ document.getElementById('regForm').addEventListener('submit', async (e) => {
     if (res.ok) {
       // 成功：如果後端有給 message 就保留；否則用我們的預設文案
         showModalKey('modal.successTitle', 'auth.registerSuccess', null, () => {
-            window.location.href = 'Login.html';
+            window.location.href = 'login.html';
         });
 
     } else {

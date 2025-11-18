@@ -45,7 +45,7 @@ document.getElementById('forgetForm').addEventListener('submit', async (e) => {
 
     if (data.status === 'success') {
       showModalKey('modal.successTitle', 'auth.passwordResetSuccess', () => {
-        window.location.href = 'Login.html';
+        window.location.href = 'login.html';
       });
     } else {
       // 若後端提供 message，可嘗試 map 出對應翻譯 key

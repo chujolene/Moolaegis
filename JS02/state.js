@@ -1494,7 +1494,7 @@ async function uploadForecastPDF(pdf, pdf_filename) {
     formData.append("title", pdf_filename);
     formData.append("type", "forecast");
 
-    const response = await fetch(`${API_BASE_URL}/reports`, {
+    const response = await fetch(`${API_BASE_URL}/reports/`, {
       method: "POST",
       body: formData,
       headers: {

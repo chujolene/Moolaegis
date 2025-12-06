@@ -48,6 +48,7 @@ document.getElementById('regForm').addEventListener('submit', async (e) => {
 
   const email    = document.getElementById('email').value.trim();
   const username = document.getElementById('username').value.trim();
+  const name = username;
   const password = document.getElementById('password').value;
 
   // 基本前端檢查
@@ -62,7 +63,7 @@ document.getElementById('regForm').addEventListener('submit', async (e) => {
     const res = await fetch(RegisterURL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, email, password })
+      body: JSON.stringify({ username, name, email, password })
     });
 
     const data = await res.json().catch(() => ({}));
@@ -84,3 +85,4 @@ document.getElementById('regForm').addEventListener('submit', async (e) => {
     showModalKey('modal.errorTitle', 'net.serverErrorTryAgain');
   }
 });
+
